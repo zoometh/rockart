@@ -1,6 +1,6 @@
 ---
-title: "**Rock-art** on multi-paradigm <br> and multi-scalar open-source app"
-abstract: "A web presentation of rock-art data and 3D mapping" 
+title: "**Art rupestre** une approche multi-paradigmes <br> et multi-scalaire dans le contexte <br> de la Science ouverte"
+abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (GitHub, 3DHOP, R) and commercial software (Photoscan)" 
 author: "Thomas Huet"
 # date: "4/26/2021"
 output:
@@ -33,11 +33,11 @@ library(english)
 
 # Presentation
 
-The mount Bego region (Alpes-Maritimes, France) is almost known for its rock-art with some impressive engraved rocks, but the site is also one of the earliest  occupation of mountains dated to the early Neolithic of (ca. -5300 BC)
+La région du mont Bégo (Alpes-Maritimes, France) est surtout connue pour son art rupestre avec un nombre  impressionnant de roches gravées, mais le site est aussi l'un des premiers de montagne à être occupé au début du Néolithique (ca. -5300 BC)
 
-# Read the data
+# Données
 
-Currently the data are stored in a local Postgres 13 database. Here, we select few field -- including the geographical coordinates -- and export them into a `.csv` file stored in the GitHub repository
+Actuellement, les données sont stockées dans une base de données Postgres 13 locale. Ici, nous sélectionnons quelques champs - y compris les coordonnées géographiques - et les exportons dans un fichier `.csv` stocké dans le dépôt GitHub.
 
 ```{r loaddb, eval=F}
 drv <- dbDriver("PostgreSQL")
@@ -54,7 +54,7 @@ write.csv(roches.all, "data/roches_all.csv", row.names = F)
 dbDisconnect(con)
 ```
 
-Some engraved rocks have been modeled in 3D with photogrammetry. These 3D models are handle with the [3DHOP framework](http://www.3dhop.net/) and stored into the GitHub forked repository [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal). In the next code chunk, we read the content of the 'minimal' folder to get the names of these models (stored as `.nxz` files in the 'models' folder)
+Certaines roches gravées ont été modélisées en 3D par photogrammétrie (logiciel commercial Photoscan). Ces modèles 3D (`.obj` ou `.ply`) sont manipulés avec le [framework 3DHOP](http://www.3dhop.net/) et stockés dans le *fork*  du dépôt GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal). Dans le `code chunk` ci-dessous, nous lisons le contenu du dossier 'minimal' pour obtenir les noms de ces modèles (stockés en tant que fichiers `.nxz` dans le dossier 'models').
 
 ```{r read}
 roches.all <- read.csv("data/roches_all.csv")
@@ -63,13 +63,15 @@ stop_for_status(req)
 filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
 D3.models <- grep("minimal/.*html$", filelist, value = TRUE)
 D3.models <- gsub("minimal/", "", D3.models)
-D3.models <- gsub(".html$", "", D3.models)
+D3.models <- sort(gsub(".html$", "", D3.models))
+n.models <- length(D3.models)
 ```
-Currently, there is `r as.english(length(D3.models))` 3D models: `r D3.models`.
 
-# Plot the map
+Actuellement, il existe `r n.models` modèles 3D: `r D3.models`.
 
-We link the URLs of engraved rocks modeled in 3D with the appropriate rows in the dataset -- to open them directly from the leaflet map --, and we assign to these rocks a custom icon (3DHOP icon)
+# Cartographie
+
+Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée (icône '3DHOP', en rouge)
 
 ```{r mapleaflet}
 D3HOP.root <- "https://zoometh.github.io/3DHOP/minimal/"
