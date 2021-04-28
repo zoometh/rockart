@@ -1,5 +1,5 @@
 ---
-title: "**Art rupestre** une approche multi-paradigmes <br> et multi-scalaire dans le contexte <br> de la Science ouverte"
+title: "**Art rupestre** une approche <br> multi-paradigmes et <br> multi-scalaire dans le contexte <br> de la Science ouverte"
 abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (GitHub, 3DHOP, R) and commercial software (Photoscan)" 
 author: "Thomas Huet"
 # date: "4/26/2021"
@@ -15,7 +15,7 @@ output:
 url.root <- "https://raw.githubusercontent.com/zoometh/thomashuet/main/img/"
 htmltools::img(src = paste0(url.root, "prj_rockart.png"), 
                alt = 'logo', 
-               width = '150px',
+               width = '200px',
                style = 'position:absolute; top:0; right:0; padding:10px;')
 ```
 
@@ -71,7 +71,7 @@ Actuellement, il existe `r n.models` modèles 3D: `r D3.models`.
 
 # Cartographie
 
-Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée (icône '3DHOP', en rouge)
+Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée (icône '3DHOP', en bleu)
 
 ```{r mapleaflet}
 D3HOP.root <- "https://zoometh.github.io/3DHOP/minimal/"
@@ -93,6 +93,7 @@ leaflet(width = "900px", height = "900px") %>%
                    lng = ~x,
                    lat = ~y,
                    popup = ~desc,
+                   color = "red",
                    radius = 0.5,
                    opacity = 0.8) %>%
   addMarkers(data = roches.3D,
@@ -104,3 +105,7 @@ leaflet(width = "900px", height = "900px") %>%
     baseGroups = c('Ortho', 'OSM')) %>%
   addScaleBar(position = "bottomleft")
 ```
+
+Certains de ces modèles 3D ont des annotations, comme la *Roche de l'homme aux bras en zigzag*, ou la *Stèle du Chef de Tribu*
+
+
