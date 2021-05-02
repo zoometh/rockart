@@ -1,5 +1,5 @@
 ---
-title: "**Art rupestre** une approche <br> multi-paradigmes et <br> multi-scalaire dans le contexte <br> de la Science ouverte"
+title: "**Art rupestre** <br> Une approche <br> multi-paradigmes et <br> multi-scalaire dans le contexte <br> de la Science ouverte"
 abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (GitHub, 3DHOP, R) and commercial software (Photoscan)" 
 author: "Thomas Huet"
 # date: "4/26/2021"
@@ -64,14 +64,16 @@ filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
 D3.models <- grep("minimal/.*html$", filelist, value = TRUE)
 D3.models <- gsub("minimal/", "", D3.models)
 D3.models <- sort(gsub(".html$", "", D3.models))
-n.models <- length(D3.models)
+nm.models <- roches.all[roches.all$idroche %in% D3.models, "nom"]
+l.nm.models <- paste0(paste0("*", nm.models, "* (", D3.models,")"))
+nb.models <- length(D3.models)
 ```
 
-Actuellement, il existe `r n.models` modèles 3D: `r D3.models`.
+Actuellement, il existe `r nb.models` modèles 3D: `r l.nm.models`
 
 # Cartographie
 
-Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée (icône '3DHOP', en bleu)
+Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée ([icône '3DHOP'](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png))
 
 ```{r mapleaflet}
 D3HOP.root <- "https://zoometh.github.io/3DHOP/minimal/"
@@ -107,5 +109,3 @@ leaflet(width = "900px", height = "900px") %>%
 ```
 
 Certains de ces modèles 3D ont des annotations, comme la *Roche de l'homme aux bras en zigzag*, ou la *Stèle du Chef de Tribu*
-
-
