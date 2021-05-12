@@ -1,7 +1,7 @@
 ---
-title: "**Art rupestre** <br> Une approche <br> multi-paradigmes et <br> multi-scalaire dans le contexte <br> de la Science ouverte"
-abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (GitHub, 3DHOP, R) and commercial software (Photoscan)" 
-author: "Thomas Huet"
+title: "**Art rupestre** <br> Une approche <br> multi-paradigmes et <br> multi-scalaire dans le contexte <br> du Web3D et de la Science ouverte"
+abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (MicMac, GitHub, 3DHOP, R, JavaScript, etc.) and commercial software (Photoscan) with the frame of Linked-Open data (LOD) and Web3D" 
+author: "Thomas Huet, Antoine Pasqualini, Arnauld Jouvenez"
 # date: "4/26/2021"
 output:
   html_document:
@@ -54,7 +54,16 @@ write.csv(roches.all, "data/roches_all.csv", row.names = F)
 dbDisconnect(con)
 ```
 
-Certaines roches gravées ont été modélisées en 3D par photogrammétrie (logiciel commercial Photoscan). Ces modèles 3D (`.obj` ou `.ply`) sont manipulés avec le [framework 3DHOP](http://www.3dhop.net/) et stockés dans le *fork*  du dépôt GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal). Dans le `code chunk` ci-dessous, nous lisons le contenu du dossier 'minimal' pour obtenir les noms de ces modèles (stockés en tant que fichiers `.nxz` dans le dossier 'models').
+Certaines roches gravées ont été modélisées en 3D par photogrammétrie (logiciel commercial [Metashape-Photoscan](https://www.agisoft.com/)) au format 3D (`.obj` ou `.ply`). Une application commerciale comme [Sketchfab](https://sketchfab.com) permet de mettre un modèle 3D en ligne et d'intégrer un conteneur `<iframe>` vers ce modèle. Comme ici:
+
+<center>
+
+<iframe title="Roche de l'archer (ZXVIII.GI.R28@a)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="fullscreen; autoplay; vr" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/a5c0771d898d4816950570cd7fb1be37/embed"> </iframe>
+
+</center>
+  
+  
+Dans le domaine du libre, ces modèles une fois transformés sont manipulés avec le [framework 3DHOP](http://www.3dhop.net/) et stockés dans le *fork*  du dépôt GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal). Dans le `code chunk` ci-dessous, nous lisons le contenu du dossier 'minimal' pour obtenir les noms de ces modèles (stockés en tant que fichiers `.nxz` dans le dossier 'models').
 
 ```{r read}
 roches.all <- read.csv("data/roches_all.csv")
