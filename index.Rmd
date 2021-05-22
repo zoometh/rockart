@@ -1,7 +1,7 @@
 ---
-title: "**Art rupestre** <br> Une approche <br> multi-paradigmes et <br> multi-scalaire dans le contexte <br> du Web3D et de la Science ouverte"
-abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (MicMac, GitHub, 3DHOP, R, JavaScript, etc.) and commercial software (Photoscan) with the frame of Linked-Open data (LOD) and Web3D" 
-author: "Thomas Huet, Antoine Pasqualini, Arnauld Jouvenez"
+title: "**Art rupestre** <br> approches multi-paradigmes et multi-scalaires <br> des graphies anciennes dans le contexte <br> du Web3D et de la Science ouverte"
+abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (MicMac, GitHub, 3DHOP, R, JavaScript, etc.) and commercial software (Photoscan) within the frame of Linked-Open data (LOD) and Web3D" 
+author: "Thomas Huet"
 # date: "4/26/2021"
 output:
   html_document:
@@ -15,12 +15,22 @@ output:
 url.root <- "https://raw.githubusercontent.com/zoometh/thomashuet/main/img/"
 htmltools::img(src = paste0(url.root, "prj_rockart.png"), 
                alt = 'logo', 
-               width = '200px',
+               width = '150px',
                style = 'position:absolute; top:0; right:0; padding:10px;')
 ```
 
 ---
 
+<style>
+.html-widget {
+margin: auto;
+}
+.leaflet .legend {
+text-align:left;
+line-height: 12px;
+font-size: 12px;
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -29,17 +39,53 @@ library(RPostgreSQL)
 library(RPostgres)
 library(httr)
 library(english)
+library(dplyr)
+library(sf)
+library(knitr)
+library(kableExtra)
+# library(htmlwidgets)
+
+url.3dhop <- "https://zoometh.github.io/3DHOP/minimal/"
+url.html <- "https://api.github.com/repos/zoometh/3DHOP/git/trees/master?recursive=1"
+url.icon <- "https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png"
+
+eval = TRUE
+
 ```
 
-# Presentation
+# Présentation
+
+Nous présentons ci-dessous, un essai de FAIRisation des données liées aux graphies anciennes (art rupestre, hiéroglyphes) en nous focalisant sur la cartogaphie et la 3D. Les données sont enregistrées dans deux *repository* GitHub: [zoometh/3DHOP](https://github.com/zoometh/3DHOP) qui est un *fork* de 3DHOP et où sont entreposés les données 3D, et [zoometh/rockart](https://github.com/zoometh/rockart) pour le reste des données. Ici, nous prenons ces deux (2) sites en exemple:
+
+
+```{r mapgen, echo=F, fig.align="center"}
+# TODO: internal hyperlink to sites
+# D3HOP.root <- "https://zoometh.github.io/3DHOP/minimal/"
+Karnak <- c("Karnak", 32.65731321534125, 25.719743198412978)
+Bego <- c("Bego", 7.4380446386350165, 44.07579327562306)
+sites.df <- as.data.frame(rbind(Karnak, Bego), stringsAsFactors = F)
+names(sites.df) <- c("nom", "x", "y")
+sites.df$url <- paste0("[", sites.df$nom, "](#", sites.df$nom, ")")
+# sites.df$url <- paste0('<a href=', shQuote(paste0(url.sith, locus$KIU)),
+#                     "\ target=\"_blank\"",">", paste0("KIU",locus$KIU), "</a>")
+leaflet(width = "400px", height = "400px", options = leafletOptions(zoomControl = FALSE)) %>%
+  addProviderTiles("Esri.WorldImagery", group = "Ortho") %>%
+  addLabelOnlyMarkers(data = sites.df,
+                      lng = ~as.numeric(x),
+                      lat = ~as.numeric(y),
+                      label = ~nom,
+                      labelOptions = labelOptions(noHide = T, direction = 'top'))
+```
+
+# Mont Bego {#Bego}
 
 La région du mont Bégo (Alpes-Maritimes, France) est surtout connue pour son art rupestre avec un nombre  impressionnant de roches gravées, mais le site est aussi l'un des premiers de montagne à être occupé au début du Néolithique (ca. -5300 BC)
 
-# Données
+## Données
 
 Actuellement, les données sont stockées dans une base de données Postgres 13 locale. Ici, nous sélectionnons quelques champs - y compris les coordonnées géographiques - et les exportons dans un fichier `.csv` stocké dans le dépôt GitHub.
 
-```{r loaddb, eval=F}
+```{r begodb, eval=eval}
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(RPostgres::Postgres(),
                  dbname = "bego_20_04_2021",
@@ -61,13 +107,13 @@ Certaines roches gravées ont été modélisées en 3D par photogrammétrie (log
 <iframe title="Roche de l'archer (ZXVIII.GI.R28@a)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="fullscreen; autoplay; vr" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/a5c0771d898d4816950570cd7fb1be37/embed"> </iframe>
 
 </center>
-  
-  
+
+
 Dans le domaine du libre, ces modèles une fois transformés sont manipulés avec le [framework 3DHOP](http://www.3dhop.net/) et stockés dans le *fork*  du dépôt GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal). Dans le `code chunk` ci-dessous, nous lisons le contenu du dossier 'minimal' pour obtenir les noms de ces modèles (stockés en tant que fichiers `.nxz` dans le dossier 'models').
 
-```{r read}
+```{r read, eval=eval}
 roches.all <- read.csv("data/roches_all.csv")
-req <- GET("https://api.github.com/repos/zoometh/3DHOP/git/trees/master?recursive=1")
+req <- GET(url.html)
 stop_for_status(req)
 filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
 D3.models <- grep("minimal/.*html$", filelist, value = TRUE)
@@ -80,21 +126,20 @@ nb.models <- length(D3.models)
 
 Actuellement, il existe `r nb.models` modèles 3D: `r l.nm.models`
 
-# Cartographie
+## Cartographie
 
 Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée ([icône '3DHOP'](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png))
 
-```{r mapleaflet}
-D3HOP.root <- "https://zoometh.github.io/3DHOP/minimal/"
+```{r mapbego, eval=eval}
 roches.3D <- roches.all[roches.all$idroche %in% D3.models, ]
 roches.others <- roches.all[!(roches.all$idroche %in% D3.models), ]
 roches.3D.icons <- icons(
-  iconUrl = "https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png",
+  iconUrl = url.icon,
   iconWidth = 40, iconHeight = 56,
   iconAnchorX = 20, iconAnchorY = 28
 )
 roches.3D$desc <- paste0("roche: ", roches.3D$idroche, '<br> 3D model: <a href=',
-                         shQuote(paste0(D3HOP.root, roches.3D$idroche, ".html")),
+                         shQuote(paste0(url.3dhop, roches.3D$idroche, ".html")),
                          "\ target=\"_blank\"",">", roches.3D$nom, "</a>")
 roches.others$desc <- paste0("roche: ", roches.others$idroche)
 leaflet(width = "900px", height = "900px") %>%
@@ -118,3 +163,79 @@ leaflet(width = "900px", height = "900px") %>%
 ```
 
 Certains de ces modèles 3D ont des annotations, comme la *Roche de l'homme aux bras en zigzag*, ou la *Stèle du Chef de Tribu*
+
+# Karnak {#Karnak}
+
+En Haute-Egypte, le complexe cultuel de Karnak (temples, pylos, chapelles, etc.) se développe au cours du Nouvel Empire, corrélativement au culte d'Amon. Le site est étudié depuis près de 150 ans par une équipe d'égyptologues français. La documentation de ces monuments en 3D, et l'interopérabilité de ces modèles 3D, peut permettre de mieux comprendre l'évolution des hiéroglyphes dans le temps (paléographie)
+
+## Données
+
+Le jeu de données correspond à un fichier .csv ([locus.csv]((https://github.com/zoometh/rockart/blob/main/www/locus.csv)) conservé sur GitHub
+
+```{r karnakdb, eval=eval}
+locus <- read.csv("www/locus.csv", sep = ";", row.names = NULL)
+kable(locus, "html", escape = FALSE,
+      caption = "Données Karnak") %>%
+  kable_styling(bootstrap_options = c("hover", "condensed"), font_size=11)
+```
+
+Les liens entre ces données et leurs identifiants [KIU](http://sith.huma-num.fr/karnak/) -- qui sont égalment des URL-- sont générés par concatenation
+
+```{r karnakbdmanip, eval=eval}
+url.sith <- "http://sith.huma-num.fr/karnak/"
+locus$url <- paste0('<a href=', shQuote(paste0(url.sith, locus$KIU)),
+                    "\ target=\"_blank\"",">", paste0("KIU",locus$KIU), "</a>")
+```
+
+Le (très beau) modèle 3D de KIU2610, nous est fourni par [Sketchfab](https://sketchfab.com/3d-models/karnak-holy-of-holies-south-exterior-77e3e1eba8cc49fe8c04d6b3343b9dc4) 
+
+<center>
+
+<iframe title="KIU2610" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="fullscreen; autoplay; vr" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/77e3e1eba8cc49fe8c04d6b3343b9dc4/embed"> </iframe>
+
+</center>
+
+## Cartographie
+
+Ces données sont comparées avec les modèles 3D existant dans le repository GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal)
+
+```{r mapkarnak, eval=eval}
+req <- GET(url.html)
+stop_for_status(req)
+filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+D3.models <- grep("minimal/.*html$", filelist, value = TRUE)
+D3.models <- gsub("minimal/", "", D3.models)
+D3.models <- sort(gsub(".html$", "", D3.models))
+nm.models <- locus[locus$url %in% D3.models, "D3"]
+nb.models <- length(nrow(nm.models))
+
+monum.3D <- locus[locus$D3 %in% D3.models, ]
+monum.others <- locus[!(locus$D3 %in% D3.models), ]
+monum.3D.icons <- icons(
+  iconUrl = url.icon,
+  iconWidth = 40, iconHeight = 56,
+  iconAnchorX = 0, iconAnchorY = 0
+)
+monum.3D$desc <- paste0(monum.3D$url, " : ", monum.3D$nom, '<br><a href=',
+                        shQuote(paste0(url.3dhop, monum.3D$D3, ".html")),
+                        "\ target=\"_blank\"",">","<b> modèle 3D </b>", "</a>")
+monum.others$desc <- paste0(monum.others$url, " : ", monum.others$nom)
+leaflet(width = "900px", height = "900px") %>%
+  addTiles(group = 'OSM') %>%
+  addProviderTiles("Esri.WorldImagery", group = "Ortho") %>%
+  addCircleMarkers(data = monum.others,
+                   lng = ~X,
+                   lat = ~Y,
+                   popup = ~desc,
+                   color = ~couleur,
+                   radius = 15,
+                   opacity = .5) %>%
+  addMarkers(data = monum.3D,
+             lng = ~X,
+             lat = ~Y,
+             popup = ~desc,
+             icon = monum.3D.icons) %>%
+  addLayersControl(
+    baseGroups = c('Ortho', 'OSM')) %>%
+  addScaleBar(position = "bottomleft")
+```
