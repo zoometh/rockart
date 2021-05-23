@@ -1,6 +1,7 @@
 ---
-title: "**Art rupestre** <br> approches multi-paradigmes et multi-scalaires <br> des graphies anciennes dans le contexte <br> du Web3D et de la Science ouverte"
-abstract: "A web multi-paradigm and multi-scalar presentation of rock-art data and 3D management with open-source softwares (MicMac, GitHub, 3DHOP, R, JavaScript, etc.) and commercial software (Photoscan) within the frame of Linked-Open data (LOD) and Web3D" 
+title: "<span style='font-size: 40px'><b>Art rupestre</b></style> <span style='font-size: 30px'> <br> approches multi-paradigmes et <br> multi-scalaires des graphies anciennes <br> dans le contexte du Web3D et <br> de la Science ouverte</style>"
+# title: "**Art rupestre** <br> approches multi-paradigmes et multi-scalaires <br> des graphies anciennes dans le contexte <br> du Web3D et de la Science ouverte"
+abstract: "A web 3D multi-paradigm and multi-scalar presentation of ancient iconography (rock-art, hieroglyphs). 3D data management with open-source softwares (GitHub, 3DHOP, Blender, R, JavaScript, etc.) within the frame of Linked-Open data (LOD)" 
 author: "Thomas Huet"
 # date: "4/26/2021"
 output:
@@ -53,16 +54,18 @@ eval = TRUE
 
 ```
 
-# Présentation
+# Introduction
 
-Nous présentons ci-dessous, un essai de FAIRisation des données liées aux graphies anciennes (art rupestre, hiéroglyphes) en nous focalisant sur la cartogaphie et la 3D. Les données sont enregistrées dans deux *repository* GitHub: [zoometh/3DHOP](https://github.com/zoometh/3DHOP) qui est un *fork* de 3DHOP et où sont entreposés les données 3D, et [zoometh/rockart](https://github.com/zoometh/rockart) pour le reste des données. Ici, nous prenons ces deux (2) sites en exemple:
+Nous présentons ci-dessous, un essai de FAIRisation des données liées aux graphies anciennes (art rupestre, hiéroglyphes) en nous focalisant sur la cartogaphie et la 3D. Ce document Rmarkdown (R + Markdown) alterne cartes, liens, tableaux, etc. avec des "morceaux de code" informatique (i.e. *code chunks*, en fond grisé). Les données qui ont servi sont enregistrées dans deux *repository* GitHub: [zoometh/3DHOP](https://github.com/zoometh/3DHOP) qui est un *fork* de 3DHOP (*3D Heritage Online Presenter*), et où sont entreposés les données 3D, et [zoometh/rockart](https://github.com/zoometh/rockart) pour le reste des données.  
+
+Ici, nous prenons ces deux (2) sites en exemple:
 
 
 ```{r mapgen, echo=F, fig.align="center"}
 # TODO: internal hyperlink to sites
 # D3HOP.root <- "https://zoometh.github.io/3DHOP/minimal/"
 Karnak <- c("Karnak", 32.65731321534125, 25.719743198412978)
-Bego <- c("Bego", 7.4380446386350165, 44.07579327562306)
+Bego <- c("Mont Bego", 7.4380446386350165, 44.07579327562306)
 sites.df <- as.data.frame(rbind(Karnak, Bego), stringsAsFactors = F)
 names(sites.df) <- c("nom", "x", "y")
 sites.df$url <- paste0("[", sites.df$nom, "](#", sites.df$nom, ")")
@@ -76,6 +79,9 @@ leaflet(width = "400px", height = "400px", options = leafletOptions(zoomControl 
                       label = ~nom,
                       labelOptions = labelOptions(noHide = T, direction = 'top'))
 ```
+&nbsp;
+  
+Pour chacun de ces sites, le logo ![](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png){width=25px} signale l'existence d'un modèle 3D
 
 # Mont Bego {#Bego}
 
@@ -85,7 +91,7 @@ La région du mont Bégo (Alpes-Maritimes, France) est surtout connue pour son a
 
 Actuellement, les données sont stockées dans une base de données Postgres 13 locale. Ici, nous sélectionnons quelques champs - y compris les coordonnées géographiques - et les exportons dans un fichier `.csv` stocké dans le dépôt GitHub.
 
-```{r begodb, eval=eval}
+```{r begodb, eval=F}
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(RPostgres::Postgres(),
                  dbname = "bego_20_04_2021",
@@ -100,7 +106,7 @@ write.csv(roches.all, "data/roches_all.csv", row.names = F)
 dbDisconnect(con)
 ```
 
-Certaines roches gravées ont été modélisées en 3D par photogrammétrie (logiciel commercial [Metashape-Photoscan](https://www.agisoft.com/)) au format 3D (`.obj` ou `.ply`). Une application commerciale comme [Sketchfab](https://sketchfab.com) permet de mettre un modèle 3D en ligne et d'intégrer un conteneur `<iframe>` vers ce modèle. Comme ici:
+Certaines roches gravées ont été modélisées en 3D par photogrammétrie (logiciel commercial [Metashape Photoscan](https://www.agisoft.com/)) au format 3D (`.obj` ou `.ply`). Une application commerciale comme [Sketchfab](https://sketchfab.com) permet de mettre un modèle 3D en ligne et d'intégrer un conteneur `<iframe>` vers ce modèle. Comme ici:
 
 <center>
 
@@ -142,7 +148,7 @@ roches.3D$desc <- paste0("roche: ", roches.3D$idroche, '<br> 3D model: <a href='
                          shQuote(paste0(url.3dhop, roches.3D$idroche, ".html")),
                          "\ target=\"_blank\"",">", roches.3D$nom, "</a>")
 roches.others$desc <- paste0("roche: ", roches.others$idroche)
-leaflet(width = "900px", height = "900px") %>%
+leaflet(width = "700px", height = "700px") %>%
   addTiles(group = 'OSM') %>%
   addProviderTiles("Esri.WorldImagery", group = "Ortho") %>%
   addCircleMarkers(data = roches.others,
@@ -161,7 +167,8 @@ leaflet(width = "900px", height = "900px") %>%
     baseGroups = c('Ortho', 'OSM')) %>%
   addScaleBar(position = "bottomleft")
 ```
-
+&nbsp;
+  
 Certains de ces modèles 3D ont des annotations, comme la *Roche de l'homme aux bras en zigzag*, ou la *Stèle du Chef de Tribu*
 
 # Karnak {#Karnak}
@@ -170,16 +177,16 @@ En Haute-Egypte, le complexe cultuel de Karnak (temples, pylos, chapelles, etc.)
 
 ## Données
 
-Le jeu de données correspond à un fichier .csv ([locus.csv]((https://github.com/zoometh/rockart/blob/main/www/locus.csv)) conservé sur GitHub
+Le jeu de données correspond à un fichier .csv ([locus.csv](https://github.com/zoometh/rockart/blob/main/www/locus.csv)) conservé sur GitHub
 
 ```{r karnakdb, eval=eval}
 locus <- read.csv("www/locus.csv", sep = ";", row.names = NULL)
 kable(locus, "html", escape = FALSE,
       caption = "Données Karnak") %>%
-  kable_styling(bootstrap_options = c("hover", "condensed"), font_size=11)
+  kable_styling(bootstrap_options = c("hover", "condensed"), font_size=12)
 ```
 
-Les liens entre ces données et leurs identifiants [KIU](http://sith.huma-num.fr/karnak/) -- qui sont égalment des URL-- sont générés par concatenation
+Les liens entre ces données et leurs identifiants [KIU (*Karnak Identifiant Unique*)](http://sith.huma-num.fr/karnak/) -- qui sont égalment des URL-- sont générés par concatenation
 
 ```{r karnakbdmanip, eval=eval}
 url.sith <- "http://sith.huma-num.fr/karnak/"
@@ -194,6 +201,8 @@ Le (très beau) modèle 3D de KIU2610, nous est fourni par [Sketchfab](https://s
 <iframe title="KIU2610" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="fullscreen; autoplay; vr" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/77e3e1eba8cc49fe8c04d6b3343b9dc4/embed"> </iframe>
 
 </center>
+
+Ce modèle est ouvert dans Blender et une nouvelle géométrie (un mesh) sur une partie de sa surface pour signaler un panneau (KIU2613). Ce panneau est donc un sous-ensemble de KIU2160
 
 ## Cartographie
 
@@ -220,7 +229,7 @@ monum.3D$desc <- paste0(monum.3D$url, " : ", monum.3D$nom, '<br><a href=',
                         shQuote(paste0(url.3dhop, monum.3D$D3, ".html")),
                         "\ target=\"_blank\"",">","<b> modèle 3D </b>", "</a>")
 monum.others$desc <- paste0(monum.others$url, " : ", monum.others$nom)
-leaflet(width = "900px", height = "900px") %>%
+leaflet(width = "700px", height = "700px") %>%
   addTiles(group = 'OSM') %>%
   addProviderTiles("Esri.WorldImagery", group = "Ortho") %>%
   addCircleMarkers(data = monum.others,
