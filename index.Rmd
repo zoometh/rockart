@@ -1,7 +1,6 @@
 ---
-title: "<span style='font-size: 40px'><b>Open3D</b></style> <span style='font-size: 30px'> <br> approches multi-paradigmes et <br> multi-scalaires <br> dans le contexte du Web3D et <br> de la Science ouverte</style>"
-# title: "**Art rupestre** <br> approches multi-paradigmes et multi-scalaires <br> des graphies anciennes dans le contexte <br> du Web3D et de la Science ouverte"
-abstract: "A web 3D multi-paradigm and multi-scalar presentation of lithic tools and ancient iconography (rock-art, hieroglyphs). 3D data management with open-source softwares (GitHub, 3DHOP, Blender, R, JavaScript, etc.) within the frame of Linked-Open data (LOD)" 
+title: "<span style='font-size: 40px'><b>Multiscalaire 3D</b></style> <span style='font-size: 30px'> <br> approches multiparadigmes et multiscalaires <br> dans le contexte du Web3D et <br> de la Science ouverte</style>"
+abstract: "*A multi-paradigm approach (cartography, web3D, etc.) and multi-scalar presentation (macro, meso, micro) of portable tools and ancient iconography with open-source softwares (GitHub, 3DHOP, Blender, R, JavaScript, etc.) for data management within the frame of Linked-Open data (LOD)*" 
 author: "Thomas Huet"
 # date: "4/26/2021"
 output:
@@ -10,6 +9,7 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: false
+pagetitle: "Multiscalaire 3D"
 ---
 
 ```{r, echo=FALSE}
@@ -58,18 +58,29 @@ eval = TRUE
 
 # Introduction
 
-Ce document Rmarkdown (R + Markdown) alterne modèles 3D, cartes, liens, tableaux, etc. avec des "morceaux de code" informatique (i.e. *code chunks*, en fond grisé). Les données qui ont servi sont enregistrées dans deux *repository* GitHub: [zoometh/3DHOP](https://github.com/zoometh/3DHOP) qui est un *fork* de 3DHOP (*3D Heritage Online Presenter*), et où sont entreposés les données 3D, et [zoometh/rockart](https://github.com/zoometh/rockart) pour le reste des données.
+
+Ce document Rmarkdown (R + Markdown) propose une approche des solutions web3D *open source* pour la gestion, la visualisation et la navigation multi-scalaire dans des modèles 3D. Les données sources sont enregistrées dans deux *repository* GitHub:
+
+  + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) où sont entreposés les données 3D. C'est un *fork* de 3DHOP (v. [ci-dessous](#D3HOP))
+  + [zoometh/rockart](https://github.com/zoometh/rockart) qui regroupe le reste des données (le document Rmarkdown lui-même, les images, etc.)
+  
+Le document alterne modèles 3D, cartes, liens hypertextes, tableaux, etc., avec des "morceaux de code" informatique (i.e. *code chunks*, en fond grisé). 
+
+# Cas d'étude
+
+Nous prenons deux cas d'étude: le premier est lié aux [données tracéologiques](#traceo) à trois échelles (macro, méso, micro), le second concerne l'[iconographie ancienne](#ico) à trois échelles (site, support, signe)
 
 ## Tracéologie {#traceo}
+> <p style="font-size:12px;font-color:gray""> travail en cours de réalisation avec l'IMF-CSIC (Barcelone, Espagne) </p>
 
-La tracéologie est l'étude de traces souvent microscopiques sur des objets ayant des dimensions allant de quelques centimètres à plusieurs mètres. Une intégration 3D de ces différentes échelles peut permettre une meilleure compréhension des savoirs-faires (technologie, archéologie du geste, etc.) et une meilleure diffusion de ces connaissances dans la communauté scientifique et auprès du grand public via le web 3D. 
+La **tracéologie** (*use-wear analysis*) est l'étude de traces souvent microscopiques sur des objets ayant des dimensions allant de quelques centimètres à plusieurs mètres. Une intégration 3D de ces différentes échelles peut permettre une meilleure compréhension des savoirs-faires (technologie, archéologie du geste, etc.) et une meilleure diffusion de ces connaissances dans la communauté scientifique et auprès du grand public via le web3D. 
 
-Sur chaque acquisition 3D, le dessin d'une [zone d'intérêt](#roi) permet de localiser les traces d'utilisation et de lier ce modèle 3D avec un autre modèle 3D obtenu à une échelle inférieure. Dans cet exemple, nous travaillons à l'intégration de modèles 3D issus de [trois échelles différentes](#scales). 
+Sur chaque acquisition 3D, le dessin d'une [zone d'intérêt](#roi) permet de localiser les traces d'utilisation et de lier ce modèle 3D avec un autre modèle 3D obtenu à une échelle inférieure. Dans cet exemple, nous travaillons à l'intégration de modèles 3D issus de [trois échelles différentes (M, m, $\mu$)](#scales) acquises sur la surface d'un galet expérimental. 
 
 
-### Dessin des zones d'intérêt {#roi}
+### Zones d'intérêt {#roi}
 
-Le dessin des zone d'intérêt (*Region of Interest*, ou ROI) est une surface 3D dessinée directement sur l'objet depuis un logiciel d'édition 3D (e.g. Blender).
+Le dessin des zone d'intérêt (*Region of Interest*, ou ROI) est une surface 3D dessinée directement sur l'objet depuis un logiciel d'édition 3D (e.g. Blender). Compte-tenu de sa simplicité, elle peut être enregistrée au format `.ply` (elle pourrait l'être également au format `.nxz`, v. [*framework* 3DHOP](#D3HOP)).
 
 <center>
 
@@ -77,84 +88,155 @@ Le dessin des zone d'intérêt (*Region of Interest*, ou ROI) est une surface 3D
 
 </center>
 
-L'objet (échelle supérieure) et la surface 3D (échelle inférieure) sont enregistrés au format `.ply`. L'objet est transformé en `.nxz`, un format adapté pour le streaming 3D, avec l'application [Nexus](http://vcg.isti.cnr.it/nexus/). Ces modèles, sont ensuite intégrés dans le [framework 3DHOP](http://www.3dhop.net/) et stockés dans le *fork*  du dépôt GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal).
+
+### Changement d'échelle {#scale}
+
+L'objet (échelle supérieure) et la ROI (échelle inférieure) sont tous deux enregistrés au format `.ply`. L'objet est transformé en `.nxz` avec l'application [Nexus](http://vcg.isti.cnr.it/nexus/). Ces modèles, sont ensuite intégrés dans le [framework 3DHOP](http://www.3dhop.net/) et stockés dans le *fork*  du dépôt GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal).
 
 <center>
 
-![Schéma de travail pour l'exposition d'un modèle 3D sur le web](https://raw.githubusercontent.com/zoometh/rockart/main/www/workflow.png){width=650px}
+
+![Schéma de travail (*workflow*) pour l'exposition d'un modèle 3D sur le web](https://raw.githubusercontent.com/zoometh/rockart/main/www/workflow.png){width=650px}
+
+</center>
+  
+Ci-dessous nous présentons une capture d'écran d'un modèle 3D d'un outil expérimental avec la ROI (à gauche en bleu) localisant (grossièrement) les traces d'utilisation. Cette ROI est activable ou desactivable avec le boution 3DHOP ![](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dnotation.png){width=25px}. Quand la ROI est clickée, elle peut ouvrir une nouvelle page HTML avec le modèle 3D à l'échelle inférieure
+  
+  
+<center>
+
+
+![Modèle 3D intégré dans le *framework* 3DHOP](https://raw.githubusercontent.com/zoometh/rockart/main/www/3DHOP_lithic_roi.png){width=650px}
 
 </center>
 
-Ci-dessous nous présentons une capture d'écran d'un modèle 3D d'un outil expérimental avec la ROI (à gauche en bleu, peu visible) localisant (grossièrement) les traces d'utilisation. Cette ROI est activable ou desactivable avec le boution 3DHOP ![](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dnotation.png){width=35px}. Quand la ROI est clickée, elle peut ouvrir une nouvelle page HTML avec le modèle 3D à l'échelle inférieure
-
-```{r, echo=FALSE, out.width="40%", out.height="20%", fig.cap="Modèle 3D intégré dans le *framework* 3DHOP ", fig.show='hold', fig.align='center'}
-knitr::include_graphics(c(paste0(url.www, "3DHOP_lithic_roi.png"),
-                          paste0(url.www,"3DHOP_lithic_roi_clicked.png"))
-)
-```
 
 Ce modèle peut être consulté à cette URL:  
 
-<center><https://zoometh.github.io/3DHOP/minimal/lithic_tool.html></center>
+<center>
+
+<font size="4"> <https://zoometh.github.io/3DHOP/minimal/lithic_tool.html> </font>
+
+</center>
+  
+  
+L'une des principale difficulté de l'intégration de modèles 3D à différentes échelles est de pouvoir positionner avec une grande précision les différentes fenêtres d'acquisition. 
+
+```{r lithicdf, echo=F, fig.align="center", eval=FALSE}
+# TODO: replacer
+longarrow <- "\u27F6"
+Encoding(longarrow) <- "UTF-8"
+df.3Dscales <- data.frame("[macro](#scale.macro)" = c("Laser","Laser"),
+                          "[meso](#scale.meso)" = c("",""), #
+                          # "[meso](#scale.meso)" = longarrow, #
+                          # "[meso](#scale.meso)" = cat("\U27F6"), #
+                          # "[meso](#scale.meso)" = expression(%->%), # "\longrightarrow"
+                          "[$\\mu$m](#scale.micro)" = c("Confocal","Confocal"), 
+                          "indices" = c("visuel", "dimensions de la surface données par le ConFocal"),
+                          check.names = F)
+kable(df.3Dscales,"html",
+      row.names = F,
+      caption = "Positionnement de la ROI") %>%
+  collapse_rows(columns = c(1, 2, 3)) %>%
+  kable_styling(full_width = FALSE,
+                position = "center",
+                font_size = 14)
+```
 
 ### Echelles {#scales}
 
-
-
-```{r lithicdf, echo=F, fig.align="center"}
-df.3Dscales <- data.frame(echelle = c("macro", "meso", "micro"),
+```{r lithicdfscale, echo=F, fig.align="center"}
+df.3Dscales <- data.frame(echelle = c("[macro](#scale.macro)", 
+                                      "[meso](#scale.meso)", 
+                                      "[micro](#scale.micro)"),
                           mesures = c("cm", "mm", "$\\mu$m"),
                           instrument = c("Laser", "HIROX", "ConFocal"))
 kable(df.3Dscales,"html",
       row.names = F,
-      caption = "Approche 3D multi-scalaire") %>%
+      caption = "Approche 3D multiscalaire") %>%
   collapse_rows(columns = c(1, 2), col_names = "echelle") %>%
   kable_styling(full_width = FALSE,
                 position = "center",
-                font_size = 12)
+                font_size = 14)
 ```
 
 
-#### Macro
+#### Macro (M) {#scale.macro}
 
-Acquisition de l'objet avec un laser, ou en photogrammétrie  
+Acquisition de l'objet avec un laser, ou en photogrammétrie. 
 
 <center>
 
-![Acquisition avec le Laser de lumière structurée smart SCAN 3D Breuckman (IMF-CSIC)](https://raw.githubusercontent.com/zoometh/rockart/main/www/stl.jpg){width=450px}
+![Acquisition avec le Laser de lumière structurée smart SCAN 3D Breuckman (M. Mozota, IMF-CSIC)](https://raw.githubusercontent.com/zoometh/rockart/main/www/stl.jpg){width=450px}
 
 </center>
 
-#### Meso
+#### meso (m){#scale.meso}
 
-HIROX
+Acquisition avec le HIROX (IMF-CSIC).
 
-#### Micro
+#### Micro ($\mu$){#scale.micro}
 
-ConFocal
+Acquisition avec le ConFocal (IMF-CSIC). Le ConFocal est une solution de microscopie optique 3D qui réalise des piles d'images (*stack*) de très faibles profondeur de champ (~ 400 *n*m) appelées 'sections optiques'
 
-## Art rupestre
+<center>
 
-Nous présentons ci-dessous, un essai de FAIRisation des données liées aux graphies anciennes (art rupestre, hiéroglyphes) en nous focalisant sur la cartogaphie et la 3D. Ici, nous prenons ces deux (2) sites en exemple:
+![Acquisition avec le ConFocal SensoSCAN (H. Halarashi, IMF-CSIC)](https://raw.githubusercontent.com/zoometh/rockart/main/www/confoc.jpg){width=250px}
+
+</center>
+
+Une partie de la surface active du galet est relevée au ConFocal. Le résultat de l'acquisition est une surface 2.5D de 768 x 516 pixels (2.55 x 1.91 mm). 
+
+
+```{r paramecf, echo=F, fig.align="center"}
+param.cf <- data.frame(optique = "x5",
+                       profondeur = "3504 $\\mu$m",
+                       "nb plans" = "293",
+                       "surface étudiée" = "768 x 516 px (2.55 x 1.91 mm)",
+                       check.names = F)
+kable(param.cf,"html",
+      row.names = F,
+      caption = "Paramètres l'acquisition ConFocal et vue de la zone d'inérêt") %>%
+  # collapse_rows(columns = c(1, 2), col_names = "echelle") %>%
+  kable_styling(full_width = FALSE,
+                position = "center",
+                font_size = 14)
+```
+
+
+<center>
+
+![](https://raw.githubusercontent.com/zoometh/rockart/main/www/confoc_3d.jpg){width=450px}
+
+</center>
+
+Cette surface peut être exportée au format `.plu` (propriétaire) ou `.dat` (*plain text*). Le format `.dat` contient les coordonnées des points (*vertices*) au format *x*, *y*, *z*. L'extension de ce fichier peut être renommée en `.xyz`, ouvert avec Meshlab, tranformé en surface (*mesh*), et importé dans le *framework* 3DHOP sous la forme d'un `.nxz` (v. [*framework* 3DHOP](#D3HOP))
+
+
+## Iconographie ancienne {#ico}
+
+
+L'étude **systèmes iconographiques** anciens a beaucoup à gagner à développer et intégrer une approche mutliscalaire, allant du site aux signes, en passant par les supports (*sites, supports, signs*). En effet, c'est conventionnellement à ces échelles que ces corpus sont étudiés.  
+
+Nous présentons ci-dessous, un essai de FAIRisation des données 3D liées aux graphies anciennes (art rupestre, hiéroglyphes). Ici, nous prenons ces deux (2) sites en exemple:
 
 
 ```{r mapgen, echo=F, fig.align="center"}
-# TODO: internal hyperlink to sites
-# D3HOP.root <- "https://zoometh.github.io/3DHOP/minimal/"
-Karnak <- c("Karnak", 32.65731321534125, 25.719743198412978)
-Bego <- c("Mont Bego", 7.4380446386350165, 44.07579327562306)
-sites.df <- as.data.frame(rbind(Karnak, Bego), stringsAsFactors = F)
-names(sites.df) <- c("nom", "x", "y")
-sites.df$url <- paste0("[", sites.df$nom, "](#", sites.df$nom, ")")
-# sites.df$url <- paste0('<a href=', shQuote(paste0(url.sith, locus$KIU)),
-#                     "\ target=\"_blank\"",">", paste0("KIU",locus$KIU), "</a>")
-leaflet(width = "400px", height = "400px", options = leafletOptions(zoomControl = FALSE)) %>%
+dat <- tibble(site = c("Karnak", "Mont Bego"),
+              url_1 = c("https://zoometh.github.io/rockart/#Karnak", 
+                        "https://zoometh.github.io/rockart/#Mont_Bego"),
+              coord_x = c(32.65731321534125, 7.4380446386350165),
+              coord_y = c(25.719743198412978, 44.07579327562306))
+dat_sf <- st_as_sf(dat, coords = c("coord_x", "coord_y"))
+dat_sf <- dat_sf %>% 
+  mutate(tag = paste0("<a href=", url_1,">", site, "</a>"))
+leaflet(dat_sf, 
+        width = "400px", height = "400px",
+        options = leafletOptions(zoomControl = FALSE)) %>%
   addProviderTiles("Esri.WorldImagery", group = "Ortho") %>%
-  addLabelOnlyMarkers(data = sites.df,
-                      lng = ~as.numeric(x),
-                      lat = ~as.numeric(y),
-                      label = ~nom,
-                      labelOptions = labelOptions(noHide = T, direction = 'top'))
+  addPopups(popup = ~tag,
+            options = popupOptions(closeButton = FALSE)
+  )
 ```
 &nbsp;
 
@@ -168,7 +250,7 @@ La région du mont Bégo (Alpes-Maritimes, France) est surtout connue pour son a
 
 Actuellement, les données sont stockées dans une base de données Postgres 13 locale. Ici, nous sélectionnons quelques champs - y compris les coordonnées géographiques - et les exportons dans un fichier `.csv` stocké dans le dépôt GitHub.
 
-```{r begodb, eval=F}
+```{r begodb, eval=F, echo = F}
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(RPostgres::Postgres(),
                  dbname = "bego_20_04_2021",
@@ -213,7 +295,7 @@ Actuellement, il existe `r nb.models` modèles 3D: `r l.nm.models`
 
 Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée ([icône '3DHOP'](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png))
 
-```{r mapbego, eval=eval}
+```{r mapbego, eval=eval, echo = F}
 roches.3D <- roches.all[roches.all$idroche %in% D3.models, ]
 roches.others <- roches.all[!(roches.all$idroche %in% D3.models), ]
 roches.3D.icons <- icons(
@@ -225,7 +307,7 @@ roches.3D$desc <- paste0("roche: ", roches.3D$idroche, '<br> 3D model: <a href='
                          shQuote(paste0(url.3dhop, roches.3D$idroche, ".html")),
                          "\ target=\"_blank\"",">", roches.3D$nom, "</a>")
 roches.others$desc <- paste0("roche: ", roches.others$idroche)
-leaflet(width = "700px", height = "700px") %>%
+leaflet(width = "600px", height = "600px") %>%
   addTiles(group = 'OSM') %>%
   addProviderTiles("Esri.WorldImagery", group = "Ortho") %>%
   addCircleMarkers(data = roches.others,
@@ -241,18 +323,18 @@ leaflet(width = "700px", height = "700px") %>%
              popup = ~desc,
              icon = roches.3D.icons) %>%
   addLayersControl(
-    baseGroups = c('Ortho', 'OSM')) %>%
+    baseGroups = c('OSM', 'Ortho')) %>%
   addScaleBar(position = "bottomleft")
 ```
 &nbsp;
 
 Certains de ces modèles 3D ont des annotations, comme la *Roche de l'homme aux bras en zigzag*, ou la *Stèle du Chef de Tribu*
 
-## Karnak {#Karnak}
+### Karnak {#Karnak}
 
 En Haute-Egypte, le complexe cultuel de Karnak (temples, pylos, chapelles, etc.) se développe au cours du Nouvel Empire, corrélativement au culte d'Amon. Le site est étudié depuis près de 150 ans par une équipe d'égyptologues français. La documentation de ces monuments en 3D, et l'interopérabilité de ces modèles 3D, peut permettre de mieux comprendre l'évolution des hiéroglyphes dans le temps (paléographie)
 
-### Données
+#### Données
 
 Le jeu de données correspond à un fichier .csv ([locus.csv](https://github.com/zoometh/rockart/blob/main/www/locus.csv)) conservé sur GitHub
 
@@ -281,11 +363,11 @@ Le (très beau) modèle 3D de KIU2610, nous est fourni par [Sketchfab](https://s
 
 Ce modèle est ouvert dans Blender et une nouvelle géométrie (un mesh) sur une partie de sa surface pour signaler un panneau (KIU2613). Ce panneau est donc un sous-ensemble de KIU2160
 
-### Cartographie
+#### Cartographie
 
 Ces données sont comparées avec les modèles 3D existant dans le repository GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal)
 
-```{r mapkarnak, eval=eval}
+```{r mapkarnak, eval=eval, echo=F}
 req <- GET(url.html)
 stop_for_status(req)
 filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
@@ -325,3 +407,31 @@ leaflet(width = "700px", height = "700px") %>%
     baseGroups = c('Ortho', 'OSM')) %>%
   addScaleBar(position = "bottomleft")
 ```
+
+## Autres
+
+### Spatialisation de données {#Itineris.3D}
+
+On cherche à spatialiser les prélèvements fait sur un objet, par exemple une fibule [1]:
+
+<center>
+  
+[https://zoometh.github.io/3DHOP/minimal/fibule.html](https://zoometh.github.io/3DHOP/minimal/fibule.html)
+  
+</center>
+
+# Le *framework* 3DHOP {#D3HOP}
+
+Le framework 3DHOP (*3D Heritage Online Presenter*) c'est -- en résumé -- un système de pages JavScript/HTML basées sur le WebGL (*Web Graphics Library*). Dans le *repository* GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP), une structure HTML prend en charge un modèle 3D `.nxz` ou `.ply`. Le format `.nxz` est adapté pour le web3D et le streaming 3D.
+
+<center>
+
+![Le *repository* 3DHOP sur GitHub](https://raw.githubusercontent.com/zoometh/rockart/main/www/3DHOPframework.png){width=250px}
+
+</center>
+
+C'est la même équipe, l'[ISTI-CNR](https://www.isti.cnr.it/en/), qui a développé [3DHOP](https://www.3dhop.net/) et [Meshlab](https://www.meshlab.net/). Ces deux outils sont donc destinés à travailler ensemble.
+
+# References
+
+[1] "Iron Age Fibula, Castilla La Mancha, Spain" ([https://skfb.ly/6WRI9](https://skfb.ly/6WRI9)) by Global Digital Heritage is licensed under Creative Commons Attribution-NonCommercial (http://creativecommons.org/licenses/by-nc/4.0/).
