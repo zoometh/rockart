@@ -210,7 +210,7 @@ kable(param.cf,"html",
 
 </center>
 
-Cette surface peut être exportée au format `.plu` (propriétaire) ou `.dat` (*plain text*). Le format `.dat` contient les coordonnées des points (*vertices*) au format *x*, *y*, *z*. L'extension de ce fichier peut être renommée en `.xyz`, ouvert avec Meshlab, tranformé en surface (*mesh*), et importé dans le *framework* 3DHOP sous la forme d'un `.nxz` (v. [*framework* 3DHOP](#D3HOP))
+Cette surface peut être exportée au format `.plu` (propriétaire) ou `.dat` (*plain text*). Le format `.dat` contient les coordonnées des points (*vertices*) au format *x*, *y*, *z*. L'extension de ce fichier peut être renommée en `.xyz`, ouvert avec Meshlab, tranformé en surface (*mesh*), et importé dans le *framework* 3DHOP sous la forme d'un `.nxz` (v. [*framework* 3DHOP](#D3HOP)). Convertit au format `.stl` (*STereoLithography* ou Standard Tessellation Language) ces modèles 3D peuvent être [directement rendu dans GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
 
 
 ## Iconographie ancienne {#ico}
