@@ -36,14 +36,16 @@ font-size: 12px;
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(leaflet)
-library(RPostgreSQL)
-library(RPostgres)
+# library(RPostgreSQL)
+# library(RPostgres)
 library(httr)
 library(english)
 library(dplyr)
 library(sf)
 library(knitr)
 library(kableExtra)
+library(plotly)
+
 # library(htmlwidgets)
 
 url.3dhop <- "https://zoometh.github.io/3DHOP/minimal/"
@@ -73,7 +75,7 @@ Nous prenons deux cas d'étude: le premier est lié aux [données tracéologique
 ## Tracéologie {#traceo}
 > <p style="font-size:12px;font-color:gray""> travail en cours de réalisation avec l'IMF-CSIC (Barcelone, Espagne) </p>
 
-La **tracéologie** (*use-wear analysis*) est l'étude de traces souvent microscopiques sur des objets ayant des dimensions allant de quelques centimètres à plusieurs mètres. Une intégration 3D de ces différentes échelles peut permettre une meilleure compréhension des savoirs-faires (technologie, archéologie du geste, etc.) et une meilleure diffusion de ces connaissances dans la communauté scientifique et auprès du grand public via le web3D. 
+La **tracéologie** (*use-wear analysis*) est l'étude de traces souvent microscopiques sur des surfaces ayant des dimensions allant de quelques centimètres à plusieurs mètres. Une intégration 3D de ces différentes échelles peut permettre une meilleure compréhension des savoirs-faires (technologie, archéologie du geste, etc.) et une meilleure diffusion de ces connaissances dans la communauté scientifique et auprès du grand public via le web3D. 
 
 Sur chaque acquisition 3D, le dessin d'une [zone d'intérêt](#roi) permet de localiser les traces d'utilisation et de lier ce modèle 3D avec un autre modèle 3D obtenu à une échelle inférieure. Dans cet exemple, nous travaillons à l'intégration de modèles 3D issus de [trois échelles différentes (M, m, $\mu$)](#scales) acquises sur la surface d'un galet expérimental. 
 
@@ -111,14 +113,15 @@ Ci-dessous nous présentons une capture d'écran d'un modèle 3D d'un outil exp�
 </center>
 
 
-Ce modèle peut être consulté à cette URL:  
+Ce modèle peut être consulté dans dans le *framework* 3DHOP à cette URL:  
 
 <center>
-
-<font size="4"> <https://zoometh.github.io/3DHOP/minimal/lithic_tool.html> </font>
+  
+<font size="3.5"> <https://zoometh.github.io/3DHOP/minimal/lithic_tool.html> </font>
 
 </center>
   
+
   
 L'une des principale difficulté de l'intégration de modèles 3D à différentes échelles est de pouvoir positionner avec une grande précision les différentes fenêtres d'acquisition. 
 
@@ -210,7 +213,36 @@ kable(param.cf,"html",
 
 </center>
 
-Cette surface peut être exportée au format `.plu` (propriétaire) ou `.dat` (*plain text*). Le format `.dat` contient les coordonnées des points (*vertices*) au format *x*, *y*, *z*. L'extension de ce fichier peut être renommée en `.xyz`, ouvert avec Meshlab, tranformé en surface (*mesh*), et importé dans le *framework* 3DHOP sous la forme d'un `.nxz` (v. [*framework* 3DHOP](#D3HOP)). Convertit au format `.stl` (*STereoLithography* ou Standard Tessellation Language) ces modèles 3D peuvent être [directement rendu dans GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
+Cette surface peut être exportée au format `.plu` (propriétaire) ou `.dat` (*plain text*). Le format `.dat` contient les coordonnées des points (*vertices*) au format *x*, *y*, *z*. L'extension de ce fichier peut être renommée en `.xyz`, ouvert avec Meshlab, tranformé en surface (*mesh*), et exporté au format `.nxz` avant d'être dans le *framework* 3DHOP sous la forme d'un `.nxz` (v. [*framework* 3DHOP](#D3HOP)). Convertit au format `.stl` (*STereoLithography* ou Standard Tessellation Language) ces modèles 3D peuvent être [directement rendu dans GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
+
+### Analyses topographiques{#anal}
+
+#### Micro-topographiques{#anal.scale.micro}
+
+Le package [Plotly](https://plotly.com/) permet de créer des graphiques interactifs basés sur le WebGL via la bibliothèque *open source* JavaScript `plotly.js`  
+
+```{r echo=FALSE, warning=FALSE, fig.width=8, fig.height= 5, fig.align="center"}
+xyz <- read.csv(paste0(url.www, "/confoc_3d.xyz"), sep = " ", header = F)
+xyz.df <- do.call(rbind, lapply(split(xyz, xyz$V1),
+                                function(d) `names<-`(xyz$V3, xyz$V2)))[,3:1]
+colors <- colorRamp(c("blue", "lightblue", "chartreuse3", "yellow", "red"))
+axx <- list(
+  title = "x"
+)
+axy <- list(
+  title = "y"
+)
+axz <- list(
+  title = "z"
+)
+plot_ly(x = ~xyz$V1, y = ~xyz$V2, z = ~xyz$V3,
+        intensity = ~xyz$V3, type = 'mesh3d',
+        colors = colors,
+        colorbar = list(title="z"))  %>%
+  layout(title = "ConFocal surface",
+         scene = list(xaxis = axx, yaxis = axy, zaxis = axz,
+                      aspectmode='data'))
+```
 
 
 ## Iconographie ancienne {#ico}
