@@ -1,0 +1,9 @@
+cff-version: 0.0.1
+message: "Please cite this gitHub package as below."
+authors:
+  - family-names: Huet
+    given-names: Thomas
+    orcid: https://orcid.org/0000-0002-1112-6122
+title: "Rockart - Multiscale 3D"
+version: 0.0.1
+date-released: 2022-03-01
