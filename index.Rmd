@@ -1,6 +1,6 @@
 ---
 title: "<span style='font-size: 40px'><b>Multiscalaire 3D</b></style> <span style='font-size: 30px'> <br> approches multiparadigmes et multiscalaires <br> dans le contexte du Web3D et <br> de la Science ouverte</style>"
-abstract: "*A multi-paradigm approach (cartography, web3D, etc.) and multi-scalar presentation (macro, meso, micro) of portable tools and ancient iconography with open-source softwares (GitHub, 3DHOP, Blender, R, JavaScript, etc.) for data management within the frame of Linked-Open data (LOD)*" 
+abstract: "*A multi-paradigm data management (cartography, web3D, etc.) and multi-scalar presentation (macro, meso, micro) of portable tools (surface form, surface texture) and ancient iconography with open-source software (GitHub,LAMP stack, 3DHOP, Blender, R, etc.) within the frame of Linked-Open data (LOD)*" 
 author: "Thomas Huet"
 # date: "4/26/2021"
 output:
@@ -45,6 +45,7 @@ library(sf)
 library(knitr)
 library(kableExtra)
 library(plotly)
+library(geodiv)
 
 # library(htmlwidgets)
 
@@ -63,7 +64,7 @@ eval = TRUE
 
 Ce document Rmarkdown (R + Markdown) propose une approche des solutions web3D *open source* pour la gestion, la visualisation et la navigation multi-scalaire dans des modèles 3D. Les données sources sont enregistrées dans deux *repository* GitHub:
 
-  + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) où sont entreposés les données 3D. C'est un *fork* de 3DHOP (v. [ci-dessous](#D3HOP))
+  + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) où sont entreposés les données 3D. C'est un *fork* de 3DHOP (v. [ci-dessous](#D3HOP)) et une pile logicielle LAMP (Linux, Apache, MySQL, PHP/Perl/Python)
   + [zoometh/rockart](https://github.com/zoometh/rockart) qui regroupe le reste des données (le document Rmarkdown lui-même, les images, etc.)
   
 Le document alterne modèles 3D, cartes, liens hypertextes, tableaux, etc., avec des "morceaux de code" informatique (i.e. *code chunks*, en fond grisé). 
@@ -217,7 +218,7 @@ Cette surface peut être exportée au format `.plu` (propriétaire) ou `.dat` (*
 
 ### Analyses topographiques{#anal}
 
-#### Micro-topographiques{#anal.scale.micro}
+#### Micro-topographies{#anal.scale.micro}
 
 Le package [Plotly](https://plotly.com/) permet de créer des graphiques interactifs basés sur le WebGL via la bibliothèque *open source* JavaScript `plotly.js`  
 
@@ -244,6 +245,23 @@ plot_ly(x = ~xyz$V1, y = ~xyz$V2, z = ~xyz$V3,
                       aspectmode='data'))
 ```
 
+##### Analyses {#anal.scale.micro.var}
+
+Le package [geodiv](https://rdrr.io/cran/geodiv/) offre plusieurs méthodes de calcul de la surface `xyz`, notamment:
+
+```{r echo=FALSE, warning=FALSE, fig.align="center"}
+xyz.mat <- as.matrix(xyz)
+sq.var <- sq(xyz.mat)
+sa.var <- sa(xyz.mat)
+sku.var <- sku(xyz.mat)
+ssk.var <- ssk(xyz.mat)
+
+df.var <- data.frame(abbrev = c('Sq', 'Sa', 'Sku', 'Ssk', '...'),
+                     descr = c('Root mean square height', 'Average roughness', 'Kurtosis', 'Skewness', '...'),
+                     val = c(sq.var, sa.var, sku.var, ssk.var, '...'))
+kable(df.var,"html") %>% 
+  kable_styling(full_width = FALSE, position = "center", font_size = 12)
+```
 
 ## Iconographie ancienne {#ico}
 
