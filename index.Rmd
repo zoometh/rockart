@@ -62,59 +62,62 @@ eval = TRUE
 # Introduction
 
 
-Ce document Rmarkdown (R + Markdown) propose une approche des solutions web3D *open source* pour la gestion, la visualisation et la navigation multi-scalaire dans des modèles 3D. Les données sources sont enregistrées dans deux *repository* GitHub:
+This Rmarkdown (R + Markdown) document proposes an approach to open source web3D solutions for multi-scalar management, visualisation and navigation in 3D models. The source data is stored in two GitHub repositories:
 
-  + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) où sont entreposés les données 3D. C'est un *fork* de 3DHOP (v. [ci-dessous](#D3HOP)) et une pile logicielle LAMP (Linux, Apache, MySQL, PHP/Perl/Python)
-  + [zoometh/rockart](https://github.com/zoometh/rockart) qui regroupe le reste des données (le document Rmarkdown lui-même, les images, etc.)
+  + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) where the 3D data is stored. This is a fork of 3DHOP (see [below](#D3HOP)) and a LAMP software stack (Linux, Apache, MySQL, PHP/Perl/Python)
+  + [zoometh/rockart](https://github.com/zoometh/rockart) which gathers the rest of the data (the Rmarkdown document itself, the images, etc.)
   
-Le document alterne modèles 3D, cartes, liens hypertextes, tableaux, etc., avec des "morceaux de code" informatique (i.e. *code chunks*, en fond grisé). 
-
-# Cas d'étude
-
-Nous prenons deux cas d'étude: le premier est lié aux [données tracéologiques](#traceo) à trois échelles (macro, méso, micro), le second concerne l'[iconographie ancienne](#ico) à trois échelles (site, support, signe)
-
-## Tracéologie {#traceo}
-> <p style="font-size:12px;font-color:gray""> travail en cours de réalisation avec l'IMF-CSIC (Barcelone, Espagne) </p>
-
-La **tracéologie** (*use-wear analysis*) est l'étude de traces souvent microscopiques sur des surfaces ayant des dimensions allant de quelques centimètres à plusieurs mètres. Une intégration 3D de ces différentes échelles peut permettre une meilleure compréhension des savoirs-faires (technologie, archéologie du geste, etc.) et une meilleure diffusion de ces connaissances dans la communauté scientifique et auprès du grand public via le web3D. 
-
-Sur chaque acquisition 3D, le dessin d'une [zone d'intérêt](#roi) permet de localiser les traces d'utilisation et de lier ce modèle 3D avec un autre modèle 3D obtenu à une échelle inférieure. Dans cet exemple, nous travaillons à l'intégration de modèles 3D issus de [trois échelles différentes (M, m, $\mu$)](#scales) acquises sur la surface d'un galet expérimental. 
+The document alternates 3D models, maps, hyperlinks, tables, etc., with computer code chunks (in grey background). 
 
 
-### Zones d'intérêt {#roi}
+# Case study
 
-Le dessin des zone d'intérêt (*Region of Interest*, ou ROI) est une surface 3D dessinée directement sur l'objet depuis un logiciel d'édition 3D (e.g. Blender). Compte-tenu de sa simplicité, elle peut être enregistrée au format `.ply` (elle pourrait l'être également au format `.nxz`, v. [*framework* 3DHOP](#D3HOP)).
+We take two cases of study: the first is related to [tracing data](#traceo) at three scales (macro, meso, micro), the second concerns [ancient iconography](#ico)
+
+## Use-wear analysis {#traceo}
+> <p style="font-size:12px;font-color:gray""> work in progress with IMF-CSIC (Barcelona, Spain) </p>
+
+Use-wear analysis is the study of often microscopic traces (sub-millimetre) on surfaces with dimensions ranging from a few centimetres (e.g. a stone tool) to several metres (e.g. a carved panel). A 3D integration of these different scales, and the precise location of microscopic traces on its support, can allow a better understanding of know-how (technology, archaeology of gesture, etc.) and a better dissemination of this knowledge in the scientific community and to the general public via web3D. 
+
+On each 3D acquisition, the drawing of an [area of interest](#roi) makes it possible to locate the traces of use and to link this 3D model with another 3D model obtained at a smaller scale. In this example, we are working on the integration of 3D models from [three different scales (M, m, $mu$)](#scales) acquired on the surface of an experimental pebble. 
+
+
+### Regions of Interest {#roi}
+
+The Region of Interest (ROI) drawing is a 3D surface drawn directly on the object from a 3D editing software (e.g. Blender). It commonly represents the minimum bound rectangle (MBR) of the traces. Because of its geometrical simplicity, it can be saved in `.ply` format (it could also be saved in `.nxz` format, v. [*framework* 3DHOP](#D3HOP)).
 
 <center>
 
-![Dessin de la ROI (en vert) comme surface 3D sur le modèle 3D (en gris) dans le logiciel Blender](https://raw.githubusercontent.com/zoometh/rockart/main/www/blender_roi.png){width=450px}
+![Drawing the ROI (green) as a 3D surface on the 3D model (grey) in Blender](https://raw.githubusercontent.com/zoometh/rockart/main/www/blender_roi.png){width=450px}
 
 </center>
 
 
-### Changement d'échelle {#scale}
+### Change of Scale {#scale}
 
-L'objet (échelle supérieure) et la ROI (échelle inférieure) sont tous deux enregistrés au format `.ply`. L'objet est transformé en `.nxz` avec l'application [Nexus](http://vcg.isti.cnr.it/nexus/). Ces modèles, sont ensuite intégrés dans le [framework 3DHOP](http://www.3dhop.net/) et stockés dans le *fork*  du dépôt GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal).
+Both the support and the ROI are saved in `.ply` format. The object is transformed into `.nxz` with the [Nexus](http://vcg.isti.cnr.it/nexus/) application. These models are then integrated into the [3DHOP framework](http://www.3dhop.net/) and stored in the *fork* of the GitHub repository [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal).
 
 <center>
 
 
-![Schéma de travail (*workflow*) pour l'exposition d'un modèle 3D sur le web](https://raw.githubusercontent.com/zoometh/rockart/main/www/workflow.png){width=650px}
+![Workflow for web publishing a 3D model ](https://raw.githubusercontent.com/zoometh/rockart/main/www/workflow.png){width=650px}  
 
 </center>
   
-Ci-dessous nous présentons une capture d'écran d'un modèle 3D d'un outil expérimental avec la ROI (à gauche en bleu) localisant (grossièrement) les traces d'utilisation. Cette ROI est activable ou desactivable avec le boution 3DHOP ![](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dnotation.png){width=25px}. Quand la ROI est clickée, elle peut ouvrir une nouvelle page HTML avec le modèle 3D à l'échelle inférieure
+Below we present a screenshot of a 3D model of an experimental tool with the ROI (left, in blue) locating (roughly) the traces of use. This ROI can be activated or deactivated with the 3DHOP
+
+![](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dnotation.png){width=25px} function. When the ROI is clicked, it can open a new HTML page with the 3D model at the lower scale
   
   
 <center>
 
 
-![Modèle 3D intégré dans le *framework* 3DHOP](https://raw.githubusercontent.com/zoometh/rockart/main/www/3DHOP_lithic_roi.png){width=650px}
+![3D model integrated in the 3DHOP framework](https://raw.githubusercontent.com/zoometh/rockart/main/www/3DHOP_lithic_roi.png){width=650px}
 
 </center>
 
 
-Ce modèle peut être consulté dans dans le *framework* 3DHOP à cette URL:  
+This model can be found in the 3DHOP framework at this URL:  
 
 <center>
   
@@ -123,8 +126,7 @@ Ce modèle peut être consulté dans dans le *framework* 3DHOP à cette URL:
 </center>
   
 
-  
-L'une des principale difficulté de l'intégration de modèles 3D à différentes échelles est de pouvoir positionner avec une grande précision les différentes fenêtres d'acquisition. 
+One of the main difficulties in integrating 3D models at different scales is to be able to position the different acquisition windows with great precision. 
 
 ```{r lithicdf, echo=F, fig.align="center", eval=FALSE}
 # TODO: replacer
@@ -136,18 +138,18 @@ df.3Dscales <- data.frame("[macro](#scale.macro)" = c("Laser","Laser"),
                           # "[meso](#scale.meso)" = cat("\U27F6"), #
                           # "[meso](#scale.meso)" = expression(%->%), # "\longrightarrow"
                           "[$\\mu$m](#scale.micro)" = c("Confocal","Confocal"), 
-                          "indices" = c("visuel", "dimensions de la surface données par le ConFocal"),
+                          "indices" = c("visual", "surface dimensions given by the ConFocal"),
                           check.names = F)
 kable(df.3Dscales,"html",
       row.names = F,
-      caption = "Positionnement de la ROI") %>%
+      caption = "ROI location") %>%
   collapse_rows(columns = c(1, 2, 3)) %>%
   kable_styling(full_width = FALSE,
                 position = "center",
                 font_size = 14)
 ```
 
-### Echelles {#scales}
+### Scales {#scales}
 
 ```{r lithicdfscale, echo=F, fig.align="center"}
 df.3Dscales <- data.frame(echelle = c("[macro](#scale.macro)", 
@@ -157,8 +159,8 @@ df.3Dscales <- data.frame(echelle = c("[macro](#scale.macro)",
                           instrument = c("Laser", "HIROX", "ConFocal"))
 kable(df.3Dscales,"html",
       row.names = F,
-      caption = "Approche 3D multiscalaire") %>%
-  collapse_rows(columns = c(1, 2), col_names = "echelle") %>%
+      caption = "Multiscalar 3D approach") %>%
+  collapse_rows(columns = c(1, 2), col_names = "scale") %>%
   kable_styling(full_width = FALSE,
                 position = "center",
                 font_size = 14)
@@ -167,40 +169,40 @@ kable(df.3Dscales,"html",
 
 #### Macro (M) {#scale.macro}
 
-Acquisition de l'objet avec un laser, ou en photogrammétrie. 
+Partial or complete acquisition of the object with a laser, photogrammetry, RTI, etc.
 
 <center>
 
-![Acquisition avec le Laser de lumière structurée smart SCAN 3D Breuckman (M. Mozota, IMF-CSIC)](https://raw.githubusercontent.com/zoometh/rockart/main/www/stl.jpg){width=450px}
+![3D acquisition with the smart SCAN 3D Breuckman structured light laser (M. Mozota, IMF-CSIC)](https://raw.githubusercontent.com/zoometh/rockart/main/www/stl.jpg){width=450px}
 
 </center>
 
 #### meso (m){#scale.meso}
 
-Acquisition avec le HIROX (IMF-CSIC).
+~~Acquisition with HIROX (IMF-CSIC).~~
 
 #### Micro ($\mu$){#scale.micro}
 
-Acquisition avec le ConFocal (IMF-CSIC). Le ConFocal est une solution de microscopie optique 3D qui réalise des piles d'images (*stack*) de très faibles profondeur de champ (~ 400 *n*m) appelées 'sections optiques'
+Acquisition with the ConFocal Sensofar PLu neox (IMF-CSIC). The ConFocal is a 3D optical microscopy solution that produces image stacks of very small depth of field (~ 400 *n*m) called 'optical sections'.
 
 <center>
 
-![Acquisition avec le ConFocal SensoSCAN (H. Halarashi, IMF-CSIC)](https://raw.githubusercontent.com/zoometh/rockart/main/www/confoc.jpg){width=250px}
+![3D acquisition with the ConFocal SensoSCAN (H. Halarashi, IMF-CSIC)](https://raw.githubusercontent.com/zoometh/rockart/main/www/confoc.jpg){width=250px}
 
 </center>
 
-Une partie de la surface active du galet est relevée au ConFocal. Le résultat de l'acquisition est une surface 2.5D de 768 x 516 pixels (2.55 x 1.91 mm). 
+A portion of the active surface of the peeble is acquired with the ConFocal. The result of the acquisition is a 2.5D surface of 768 x 516 pixels (2.55 x 1.91 mm). 
 
 
 ```{r paramecf, echo=F, fig.align="center"}
 param.cf <- data.frame(optique = "x5",
                        profondeur = "3504 $\\mu$m",
                        "nb plans" = "293",
-                       "surface étudiée" = "768 x 516 px (2.55 x 1.91 mm)",
+                       "studied surface" = "768 x 516 px (2.55 x 1.91 mm)",
                        check.names = F)
 kable(param.cf,"html",
       row.names = F,
-      caption = "Paramètres l'acquisition ConFocal et vue de la zone d'inérêt") %>%
+      caption = "ConFocal acquisition settings and ROI") %>%
   # collapse_rows(columns = c(1, 2), col_names = "echelle") %>%
   kable_styling(full_width = FALSE,
                 position = "center",
@@ -214,13 +216,15 @@ kable(param.cf,"html",
 
 </center>
 
-Cette surface peut être exportée au format `.plu` (propriétaire) ou `.dat` (*plain text*). Le format `.dat` contient les coordonnées des points (*vertices*) au format *x*, *y*, *z*. L'extension de ce fichier peut être renommée en `.xyz`, ouvert avec Meshlab, tranformé en surface (*mesh*), et exporté au format `.nxz` avant d'être dans le *framework* 3DHOP sous la forme d'un `.nxz` (v. [*framework* 3DHOP](#D3HOP)). Convertit au format `.stl` (*STereoLithography* ou Standard Tessellation Language) ces modèles 3D peuvent être [directement rendu dans GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
+This surface can be exported in `.plu` (proprietary) or `.dat` (*plain text*) format. The `.dat` format contains the coordinates of the points (*vertices*) in *x*, *y*, *z* columns and three more columns. This `.dat` file extension can be directly renamed to `.xyz`, or clean-up (remove unused columns) and recast with this R script:
 
-### Analyses topographiques{#anal}
+opened with Meshlab, transformed into a mesh, and exported to `.nxz` before being in the 3DHOP framework as a `.nxz` (v. [*framework* 3DHOP](#D3HOP)). Converted to `.stl` (*STereoLithography* or Standard Tessellation Language) these 3D models can be [directly rendered in GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
 
-#### Micro-topographies{#anal.scale.micro}
+### Topographical analyses{#anal}
 
-Le package [Plotly](https://plotly.com/) permet de créer des graphiques interactifs basés sur le WebGL via la bibliothèque *open source* JavaScript `plotly.js`  
+#### Micro-topography{#anal.scale.micro}
+
+The [Plotly](https://plotly.com/) package allows you to create WebGL-based interactive graphics via the *open source* JavaScript library `plotly.js`.  
 
 ```{r echo=FALSE, warning=FALSE, fig.width=8, fig.height= 5, fig.align="center"}
 xyz <- read.csv(paste0(url.www, "/confoc_3d.xyz"), sep = " ", header = F)
@@ -247,7 +251,7 @@ plot_ly(x = ~xyz$V1, y = ~xyz$V2, z = ~xyz$V3,
 
 ##### Analyses {#anal.scale.micro.var}
 
-Le package [geodiv](https://rdrr.io/cran/geodiv/) offre plusieurs méthodes de calcul de la surface `xyz`, notamment:
+The package [geodiv](https://rdrr.io/cran/geodiv/) offers several methods for calculating the `xyz` surface, including
 
 ```{r echo=FALSE, warning=FALSE, fig.align="center"}
 xyz.mat <- as.matrix(xyz)
@@ -264,7 +268,7 @@ kable(df.var,"html") %>%
 ```
 
 ## Iconographie ancienne {#ico}
-
+> french
 
 L'étude **systèmes iconographiques** anciens a beaucoup à gagner à développer et intégrer une approche mutliscalaire, allant du site aux signes, en passant par les supports (*sites, supports, signs*). En effet, c'est conventionnellement à ces échelles que ces corpus sont étudiés.  
 
