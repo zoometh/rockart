@@ -62,29 +62,30 @@ eval = TRUE
 # Introduction
 
 
-This Rmarkdown (R + Markdown) document proposes an approach to open source web3D solutions for multi-scalar management, visualisation and navigation in 3D models. The source data is stored in two GitHub repositories:
+This Rmarkdown (R + Markdown) document proposes an approach to open source web3D solutions for multi-scalar management, analysis, visualisation and navigation in 3D models. The source data is stored in two GitHub repositories:
 
   + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) where the 3D data is stored. This is a fork of 3DHOP (see [below](#D3HOP)) and a LAMP software stack (Linux, Apache, MySQL, PHP/Perl/Python)
-  + [zoometh/rockart](https://github.com/zoometh/rockart) which gathers the rest of the data (the Rmarkdown document itself, the images, etc.)
+  + [zoometh/rockart](https://github.com/zoometh/rockart) which gathers the rest of the data (the Rmarkdown document itself, the images, etc.), and where the analysis are proceeded
   
 The document alternates 3D models, maps, hyperlinks, tables, etc., with computer code chunks (in grey background). 
 
 
-# Case study
-
-We take two cases of study: the first is related to [tracing data](#traceo) at three scales (macro, meso, micro), the second concerns [ancient iconography](#ico)
-
-## Use-wear analysis {#traceo}
+## Introduction {#traceo}
 > <p style="font-size:12px;font-color:gray""> work in progress with IMF-CSIC (Barcelona, Spain) </p>
 
-Use-wear analysis is the study of often microscopic traces (sub-millimetre) on surfaces with dimensions ranging from a few centimetres (e.g. a stone tool) to several metres (e.g. a carved panel). A 3D integration of these different scales, and the precise location of microscopic traces on its support, can allow a better understanding of know-how (technology, archaeology of gesture, etc.) and a better dissemination of this knowledge in the scientific community and to the general public via web3D. 
+Use-wear analysis is the study of often microscopic traces (sub-millimetre) on surfaces with dimensions ranging from a few centimetres (e.g. a stone tool). It informs on instrumental practices, just as the paleography informs on cultural practices and changes in carved panels iconography, or settlement analysis informs on landscape use. For each of these example, the background is the tool, the panel, and the landscape. And we consider the stigmats on these supports
 
-On each 3D acquisition, the drawing of an [area of interest](#roi) makes it possible to locate the traces of use and to link this 3D model with another 3D model obtained at a smaller scale. In this example, we are working on the integration of 3D models from [three different scales (M, m, $mu$)](#scales) acquired on the surface of an experimental pebble. 
+A 3D integration of these different scales, and the precise location of microscopic traces on its support, can allow a better understanding of know-how (technology, archaeology of gesture, etc.) and a better dissemination of this knowledge in the scientific community and to the general public via web3D. We take two cases of study: the first is related to [tracing data](#traceo), the second concerns [ancient iconography](#ico)
+ 
+### Supports
 
+2. an `.xyz` format can be opened with Meshlab, transformed into a mesh, and exported to `.nxz` 
+3. added into the [3DHOP framework](#D3HOP) as a `.nxz` (v. [*framework* 3DHOP]). Converted to `.stl` (*STereoLithography* or Standard Tessellation Language) these 3D models can be [directly rendered in GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
+On each 3D acquisition, the drawing of an [area of interest](#roi) makes it possible to locate the traces of use and to link this 3D model with another 3D model obtained at a smaller scale. In this example, we are working on the integration of 3D models from [three different scales (M, m, $mu$)](#scales) acquired on the surface of an experimental pebble.
 
 ### Regions of Interest {#roi}
 
-The Region of Interest (ROI) drawing is a 3D surface drawn directly on the object from a 3D editing software (e.g. Blender). It commonly represents the minimum bound rectangle (MBR) of the traces. Because of its geometrical simplicity, it can be saved in `.ply` format (it could also be saved in `.nxz` format, v. [*framework* 3DHOP](#D3HOP)).
+The Region of Interest (ROI) drawing is a 3D surface drawn directly on the object in a 3D software (e.g. Blender). It commonly represents the minimum bound rectangle (MBR) of the traces. Because of its geometrical simplicity, it can be saved in `.ply` format (it could also be saved in `.nxz` format, v. [*framework* 3DHOP](#D3HOP)).
 
 <center>
 
@@ -216,9 +217,8 @@ kable(param.cf,"html",
 
 </center>
 
-This surface can be exported in `.plu` (proprietary) or `.dat` (*plain text*) format. The `.dat` format contains the coordinates of the points (*vertices*) in *x*, *y*, *z* columns and three more columns. This `.dat` file extension can be directly renamed to `.xyz`, or clean-up (remove unused columns) and recast with this R script:
+This surface can be exported in `.plu` (proprietary) or `.dat` (*plain text*) format. The `.dat` format contains the coordinates of the points (*vertices*) in *x*, *y*, *z* columns and three more columns. To convert this `.dat` file extension into 3D it can be directly renamed to `.xyz`, or clean-up (remove unused columns) and recast with this [R script](https://github.com/zoometh/rockart/blob/main/clean_dat.R)
 
-opened with Meshlab, transformed into a mesh, and exported to `.nxz` before being in the 3DHOP framework as a `.nxz` (v. [*framework* 3DHOP](#D3HOP)). Converted to `.stl` (*STereoLithography* or Standard Tessellation Language) these 3D models can be [directly rendered in GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
 
 ### Topographical analyses{#anal}
 
