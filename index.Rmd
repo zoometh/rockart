@@ -1,5 +1,5 @@
 ---
-title: "<span style='font-size: 40px'><b>Multiscalaire 3D</b></style> <span style='font-size: 30px'> <br> approches multiparadigmes et multiscalaires <br> dans le contexte du Web3D et <br> de la Science ouverte</style>"
+title: "<span style='font-size: 40px'><b>Multiscalar 3D</b></style> <span style='font-size: 30px'> <br> multiscalar approach of traces on surfaces</style>"
 abstract: "*A multi-paradigm data management (cartography, web3D, etc.) and multi-scalar presentation (macro, meso, micro) of portable tools (surface form, surface texture) and ancient iconography with open-source software (GitHub,LAMP stack, 3DHOP, Blender, R, etc.) within the frame of Linked-Open data (LOD)*" 
 author: "Thomas Huet"
 # date: "4/26/2021"
@@ -9,7 +9,7 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: false
-pagetitle: "Multiscalaire 3D"
+pagetitle: "3D Multiscalar"
 ---
 
 ```{r, echo=FALSE}
@@ -59,18 +59,8 @@ eval = TRUE
 
 ```
 
-## Technical prolog
 
-
-This Rmarkdown (R + Markdown) document proposes an approach to open source web3D solutions for multi-scalar management, analysis, visualisation and navigation in 3D models. The source data is stored in two GitHub repositories:
-
-  + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) where the 3D data is stored. This is a fork of 3DHOP (see [below](#D3HOP)) and a LAMP software stack (Linux, Apache, MySQL, PHP/Perl/Python)
-  + [zoometh/rockart](https://github.com/zoometh/rockart) which gathers the rest of the data (the Rmarkdown document itself, the images, etc.), and where the analysis are proceeded
-  
-The document alternates 3D models, maps, hyperlinks, tables, etc., with computer code chunks (in grey background). 
-
-
-## Introduction
+# Introduction
 > <p style="font-size:12px;font-color:gray""> work in progress with IMF-CSIC (Barcelona, Spain) </p>
 
 Use-wear analysis focuses on microscopic traces (sub-millimetre)  traces made on surfaces with dimensions of a few centimetres (for example, a stone tool). 
@@ -96,10 +86,10 @@ Each of these scales has specific survey methods and tools to investigate: ConFo
 On each 3D acquisition, the drawing of an region of interest makes it possible to locate the traces on the surface and to link 3D model of the surface (larger scale) with the 3D model of the traces (smaller scale). 
 
 
-## Use-wear analysis {#traceo}
+# Use-wear analysis {#traceo}
 
 
-### Regions of Interest {#roi}
+## Regions of Interest {#roi}
 
 The Region of Interest (ROI) drawing is a 3D surface drawn directly on the object in a 3D software (e.g. Blender). It commonly represents the minimum bound rectangle (MBR) of the traces. Because of its geometrical simplicity, it can be saved in `.ply` format (it could also be saved in `.nxz` format, v. [*framework* 3DHOP](#D3HOP)).
 
@@ -110,7 +100,7 @@ The Region of Interest (ROI) drawing is a 3D surface drawn directly on the objec
 </center>
 
 
-### Change of Scale {#scale}
+## Change of Scale {#scale}
 
 Both the support and the ROI are saved in `.ply` format. The object is transformed into `.nxz` with the [Nexus](http://vcg.isti.cnr.it/nexus/) application. These models are then integrated into the [3DHOP framework](http://www.3dhop.net/) and stored in the *fork* of the GitHub repository [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal).
 
@@ -167,7 +157,7 @@ kable(df.3Dscales,"html",
                 font_size = 14)
 ```
 
-### Scales {#scales}
+## Scales {#scales}
 
 ```{r lithicdfscale, echo=F, fig.align="center"}
 df.3Dscales <- data.frame(echelle = c("[macro](#scale.macro)", 
@@ -185,7 +175,7 @@ kable(df.3Dscales,"html",
 ```
 
 
-#### Macro (M) {#scale.macro}
+### Macro (M) {#scale.macro}
 
 Partial or complete acquisition of the object with a laser, photogrammetry, RTI, etc.
 
@@ -195,11 +185,11 @@ Partial or complete acquisition of the object with a laser, photogrammetry, RTI,
 
 </center>
 
-#### meso (m){#scale.meso}
+### meso (m){#scale.meso}
 
 ~~Acquisition with HIROX (IMF-CSIC).~~
 
-#### Micro ($\mu$){#scale.micro}
+### Micro ($\mu$){#scale.micro}
 
 Acquisition with the ConFocal Sensofar PLu neox (IMF-CSIC). The ConFocal is a 3D optical microscopy solution that produces image stacks of very small depth of field (~ 400 *n*m) called 'optical sections'.
 
@@ -237,9 +227,9 @@ kable(param.cf,"html",
 This surface can be exported in `.plu` (proprietary) or `.dat` (*plain text*) format. The `.dat` format contains the coordinates of the points (*vertices*) in *x*, *y*, *z* columns and three more columns. To convert this `.dat` file extension into 3D it can be directly renamed to `.xyz`, or clean-up (remove unused columns) and recast with this [R script](https://github.com/zoometh/rockart/blob/main/clean_dat.R)
 
 
-### Topographical analyses{#anal}
+## Topographical analyses{#anal}
 
-#### Micro-topography{#anal.scale.micro}
+### Micro-topography{#anal.scale.micro}
 
 The [Plotly](https://plotly.com/) package allows you to create WebGL-based interactive graphics via the *open source* JavaScript library `plotly.js`.  
 
@@ -266,7 +256,7 @@ plot_ly(x = ~xyz$V1, y = ~xyz$V2, z = ~xyz$V3,
                       aspectmode = 'data'))
 ```
 
-##### Analyses {#anal.scale.micro.var}
+#### Analyses {#anal.scale.micro.var}
 
 The package [geodiv](https://rdrr.io/cran/geodiv/) offers several methods for calculating the `xyz` surface, including
 
@@ -284,7 +274,7 @@ kable(df.var,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size = 12)
 ```
 
-## Iconographie ancienne {#ico}
+# Iconographie ancienne {#ico}
 > french
 
 L'étude **systèmes iconographiques** anciens a beaucoup à gagner à développer et intégrer une approche mutliscalaire, allant du site aux signes, en passant par les supports. En effet, c'est conventionnellement à ces échelles que ces corpus sont étudiés.  
@@ -313,11 +303,11 @@ leaflet(dat_sf,
 
 Pour chacun de ces sites, le logo ![](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png){width=25px} signale l'existence d'un modèle 3D
 
-### Mont Bego {#Bego}
+## Mont Bego {#Bego}
 
 La région du mont Bégo (Alpes-Maritimes, France) est surtout connue pour son art rupestre avec un nombre  impressionnant de roches gravées, mais le site est aussi l'un des premiers de montagne à être occupé au début du Néolithique (ca. -5300 BC)
 
-#### Données
+### Données
 
 Actuellement, les données sont stockées dans une base de données Postgres 13 locale. Ici, nous sélectionnons quelques champs - y compris les coordonnées géographiques - et les exportons dans un fichier `.csv` stocké dans le dépôt GitHub.
 
@@ -362,7 +352,7 @@ nb.models <- length(D3.models)
 
 Actuellement, il existe `r nb.models` modèles 3D: `r l.nm.models`
 
-#### Cartographie
+### Cartographie
 
 Nous lions les URL des roches gravées modélisées en 3D par jointure sur leur identifiant (e.g., 7_1_8) dans la table des roches -- pour les ouvrir directement à partir de la carte *Leaflet* --, et nous attribuons à ces roches une icône personnalisée ([icône '3DHOP'](https://raw.githubusercontent.com/zoometh/rockart/main/www/icon_3dhop.png))
 
@@ -401,11 +391,11 @@ leaflet(width = "600px", height = "600px") %>%
 
 Certains de ces modèles 3D ont des annotations, comme la *Roche de l'homme aux bras en zigzag*, ou la *Stèle du Chef de Tribu*
 
-### Karnak {#Karnak}
+## Karnak {#Karnak}
 
 En Haute-Egypte, le complexe cultuel de Karnak (temples, pylos, chapelles, etc.) se développe au cours du Nouvel Empire, corrélativement au culte d'Amon. Le site est étudié depuis près de 150 ans par une équipe d'égyptologues français. La documentation de ces monuments en 3D, et l'interopérabilité de ces modèles 3D, peut permettre de mieux comprendre l'évolution des hiéroglyphes dans le temps (paléographie)
 
-#### Données
+### Données
 
 Le jeu de données correspond à un fichier .csv ([locus.csv](https://github.com/zoometh/rockart/blob/main/www/locus.csv)) conservé sur GitHub
 
@@ -434,7 +424,7 @@ Le (très beau) modèle 3D de KIU2610, nous est fourni par [Sketchfab](https://s
 
 Ce modèle est ouvert dans Blender et une nouvelle géométrie (un mesh) sur une partie de sa surface pour signaler un panneau (KIU2613). Ce panneau est donc un sous-ensemble de KIU2160
 
-#### Cartographie
+### Cartographie
 
 Ces données sont comparées avec les modèles 3D existant dans le repository GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal)
 
@@ -479,30 +469,23 @@ leaflet(width = "700px", height = "700px") %>%
   addScaleBar(position = "bottomleft")
 ```
 
-## Autres
 
-### Spatialisation de données {#Itineris.3D}
+# Technical epilog
 
-On cherche à spatialiser les prélèvements fait sur un objet, par exemple une fibule [1]:
+This Rmarkdown (R + Markdown) document proposes an approach to open source web3D solutions for multi-scalar management, analysis, visualisation and navigation in 3D models. The source data is stored in two GitHub repositories:
 
-<center>
+  + [zoometh/3DHOP](https://github.com/zoometh/3DHOP) where the 3D data is stored. This is a fork of 3DHOP (see [below](#D3HOP)) and a LAMP software stack (Linux, Apache, MySQL, PHP/Perl/Python)
+  + [zoometh/rockart](https://github.com/zoometh/rockart) which gathers the rest of the data (the Rmarkdown document itself, the images, etc.), and where the analysis are proceeded
   
-[https://zoometh.github.io/3DHOP/minimal/fibule.html](https://zoometh.github.io/3DHOP/minimal/fibule.html)
-  
-</center>
+## 3DHOP *framework* {#D3HOP}
 
-# Le *framework* 3DHOP {#D3HOP}
-
-Le framework 3DHOP (*3D Heritage Online Presenter*) c'est -- en résumé -- un système de pages JavScript/HTML basées sur le WebGL (*Web Graphics Library*). Dans le *repository* GitHub [zoometh/3DHOP](https://github.com/zoometh/3DHOP), une structure HTML prend en charge un modèle 3D `.nxz` ou `.ply`. Le format `.nxz` est adapté pour le web3D et le streaming 3D.
+The [3DHOP](https://www.3dhop.net/) (*3D Heritage Online Presenter*) framework is -- in short -- a structure of JavaScript/HTML pages based on WebGL (*Web Graphics Library*). On the GitHub *repository* [zoometh/3DHOP](https://github.com/zoometh/3DHOP), an HTML structure supports a `.nxz` or `.ply` 3D models. The `.nxz` format is suitable for web3D and 3D streaming.
 
 <center>
 
-![Le *repository* 3DHOP sur GitHub](https://raw.githubusercontent.com/zoometh/rockart/main/www/3DHOPframework.png){width=250px}
+![3DHOP *repository* on GitHub](https://raw.githubusercontent.com/zoometh/rockart/main/www/3DHOPframework.png){width=250px}
 
 </center>
 
-C'est la même équipe, l'[ISTI-CNR](https://www.isti.cnr.it/en/), qui a développé [3DHOP](https://www.3dhop.net/) et [Meshlab](https://www.meshlab.net/). Ces deux outils sont donc destinés à travailler ensemble.
+It is the same team, [ISTI-CNR](https://www.isti.cnr.it/en/), that developed 3DHOP and [Meshlab](https://www.meshlab.net/). These two tools are therefore intended to work together.
 
-# References
-
-[1] "Iron Age Fibula, Castilla La Mancha, Spain" ([https://skfb.ly/6WRI9](https://skfb.ly/6WRI9)) by Global Digital Heritage is licensed under Creative Commons Attribution-NonCommercial (http://creativecommons.org/licenses/by-nc/4.0/).
