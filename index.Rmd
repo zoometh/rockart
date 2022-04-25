@@ -59,7 +59,7 @@ eval = TRUE
 
 ```
 
-# Introduction
+## Technical prolog
 
 
 This Rmarkdown (R + Markdown) document proposes an approach to open source web3D solutions for multi-scalar management, analysis, visualisation and navigation in 3D models. The source data is stored in two GitHub repositories:
@@ -70,18 +70,34 @@ This Rmarkdown (R + Markdown) document proposes an approach to open source web3D
 The document alternates 3D models, maps, hyperlinks, tables, etc., with computer code chunks (in grey background). 
 
 
-## Introduction {#traceo}
+## Introduction
 > <p style="font-size:12px;font-color:gray""> work in progress with IMF-CSIC (Barcelona, Spain) </p>
 
-Use-wear analysis is the study of often microscopic traces (sub-millimetre) on surfaces with dimensions ranging from a few centimetres (e.g. a stone tool). It informs on instrumental practices, just as the paleography informs on cultural practices and changes in carved panels iconography, or settlement analysis informs on landscape use. For each of these example, the background is the tool, the panel, and the landscape. And we consider the stigmats on these supports
+Use-wear analysis focuses on microscopic traces (sub-millimetre)  traces made on surfaces with dimensions of a few centimetres (for example, a stone tool). 
 
-A 3D integration of these different scales, and the precise location of microscopic traces on its support, can allow a better understanding of know-how (technology, archaeology of gesture, etc.) and a better dissemination of this knowledge in the scientific community and to the general public via web3D. We take two cases of study: the first is related to [tracing data](#traceo), the second concerns [ancient iconography](#ico)
- 
-### Supports
+<center>
 
-2. an `.xyz` format can be opened with Meshlab, transformed into a mesh, and exported to `.nxz` 
-3. added into the [3DHOP framework](#D3HOP) as a `.nxz` (v. [*framework* 3DHOP]). Converted to `.stl` (*STereoLithography* or Standard Tessellation Language) these 3D models can be [directly rendered in GitHub](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl).
-On each 3D acquisition, the drawing of an [area of interest](#roi) makes it possible to locate the traces of use and to link this 3D model with another 3D model obtained at a smaller scale. In this example, we are working on the integration of 3D models from [three different scales (M, m, $mu$)](#scales) acquired on the surface of an experimental pebble.
+![ConFocal 3D model of use-wear on a lithic tool, by J. Ibañez](https://raw.githubusercontent.com/zoometh/rockart/main/www/scale_micro.png){width=450px}
+
+</center>
+
+Traces on surfaces are also common at larger scales. For example, rock-art is commonly defined as the action of carvings made by incisions, peckings (creating hollow structures) or paintings (creating a new physical layer) on rock panels.At this level the traces are centimetric, to be seen, and the support is generally of the order of a meter. We can also considerated that the landscape shaped by settlements with houses, ditches and roads, bears the stigma of human societies. 
+
+<center>
+
+![3D view of the Sidbury Hill archaeological site with the R package rayshader](https://raw.githubusercontent.com/zoometh/popland/main/doc/data/sidbury/sidbury_rayshader.png){width=450px}
+
+</center>
+
+All these instrumental practices inform us on cultural choices. At some point, it could be interesting to link the $\mu$m scale of use-wear, with the cm scale of a stone tool, this tool with the m scale of rock panel, and the rock panel with the site where it lies.
+
+Each of these scales has specific survey methods and tools to investigate: ConFocal, photogrammetry, LiDAR (to name but a few). But all of these methods are based on *surface texture* (ISO 25178) for the traces, and *surface form* for the surface: methods for the study are scale-invariant. Nowadays, a 3D survey at each one of these scale is not the main challenging part, but the 3D integration of these surveys, with the precise location of traces on surfaces, is the key.
+
+On each 3D acquisition, the drawing of an region of interest makes it possible to locate the traces on the surface and to link 3D model of the surface (larger scale) with the 3D model of the traces (smaller scale). 
+
+
+## Use-wear analysis {#traceo}
+
 
 ### Regions of Interest {#roi}
 
@@ -97,6 +113,7 @@ The Region of Interest (ROI) drawing is a 3D surface drawn directly on the objec
 ### Change of Scale {#scale}
 
 Both the support and the ROI are saved in `.ply` format. The object is transformed into `.nxz` with the [Nexus](http://vcg.isti.cnr.it/nexus/) application. These models are then integrated into the [3DHOP framework](http://www.3dhop.net/) and stored in the *fork* of the GitHub repository [zoometh/3DHOP](https://github.com/zoometh/3DHOP/tree/master/minimal).
+
 
 <center>
 
@@ -243,10 +260,10 @@ axz <- list(
 plot_ly(x = ~xyz$V1, y = ~xyz$V2, z = ~xyz$V3,
         intensity = ~xyz$V3, type = 'mesh3d',
         colors = colors,
-        colorbar = list(title="z"))  %>%
+        colorbar = list(title = "z"))  %>%
   layout(title = "ConFocal surface",
          scene = list(xaxis = axx, yaxis = axy, zaxis = axz,
-                      aspectmode='data'))
+                      aspectmode = 'data'))
 ```
 
 ##### Analyses {#anal.scale.micro.var}
@@ -270,7 +287,7 @@ kable(df.var,"html") %>%
 ## Iconographie ancienne {#ico}
 > french
 
-L'étude **systèmes iconographiques** anciens a beaucoup à gagner à développer et intégrer une approche mutliscalaire, allant du site aux signes, en passant par les supports (*sites, supports, signs*). En effet, c'est conventionnellement à ces échelles que ces corpus sont étudiés.  
+L'étude **systèmes iconographiques** anciens a beaucoup à gagner à développer et intégrer une approche mutliscalaire, allant du site aux signes, en passant par les supports. En effet, c'est conventionnellement à ces échelles que ces corpus sont étudiés.  
 
 Nous présentons ci-dessous, un essai de FAIRisation des données 3D liées aux graphies anciennes (art rupestre, hiéroglyphes). Ici, nous prenons ces deux (2) sites en exemple:
 
