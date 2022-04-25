@@ -44,5 +44,5 @@ library(htmlwidgets)
 saveWidget(as_widget(surf3d), "surf3d.html")
 # creates https://zoometh.github.io/rockart/surf3d
 
-saveWidget(as_widget(surf3d), "surf3d_mark.html")
+saveWidget(as_widget(surf3d_mark), "surf3d_mark.html")
 # creates https://zoometh.github.io/rockart/surf3d_mark
