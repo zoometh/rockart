@@ -262,6 +262,7 @@ The package [geodiv](https://rdrr.io/cran/geodiv/) offers several methods for ca
 
 ```{r echo=FALSE, warning=FALSE, fig.align="center"}
 xyz.mat <- as.matrix(xyz)
+
 sq.var <- sq(xyz.mat)
 sa.var <- sa(xyz.mat)
 sku.var <- sku(xyz.mat)
