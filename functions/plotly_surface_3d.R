@@ -1,5 +1,6 @@
 library(plotly)
 library(dplyr)
+library(htmlwidgets)
 
 url.www <- "https://raw.githubusercontent.com/zoometh/rockart/main/www/"
 xyz <- read.csv(paste0(url.www, "/confoc_3d.xyz"), sep = " ", header = F)
@@ -67,17 +68,5 @@ saveWidget(as_widget(surf3d), "surf3d.html")
 saveWidget(as_widget(surf3d_mark), "surf3d_mark.html")
 # creates https://zoometh.github.io/rockart/surf3d_mark
 
-# library(plotly)
-# 
-# df <- diamonds[sample(nrow(diamonds), 1000), ]
-# 
-# fig <- plot_ly(df, x = ~carat, y = ~price, text = ~paste("Clarity: ", clarity),
-#                mode = "markers", color = ~carat, size = ~carat)
-# 
-# fig <- layout(fig, dragmode="drawrect", 
-#               xaxis = list(title = 'Click and drag inside the figure to draw a rectangle or select another shape in the modebar'))
-# 
-# fig <- fig %>%
-#   config(modeBarButtonsToAdd = list("drawine", "drawopenpath", "drawclosedpath", "drawcircle", "drawrect", "eraseshape" ) )
-# 
-# fig
+saveWidget(as_widget(surf3d_marks), "surf3d_marks.html")
+# creates https://zoometh.github.io/rockart/surf3d_marks

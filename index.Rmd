@@ -79,9 +79,9 @@ Traces on surfaces are also common at larger scales. For example, rock-art is co
 
 </center>
 
-All these instrumental practices inform us on cultural choices. At some point, it could be interesting to link the $\mu$m scale of use-wear, with the cm scale of a stone tool, this tool with the m scale of rock panel, and the rock panel with the site where it lies.
+All these examples are instrumental practices that inform us on cultural choices. At some point, it could be interesting to link the $\mu$m scale of use-wear, with the cm scale of a stone tool, this tool with the m scale of rock panel, and the rock panel with the site where it lies.
 
-Each of these scales has specific survey methods and tools to investigate: ConFocal, photogrammetry, LiDAR (to name but a few). But all of these methods are based on *surface texture* (ISO 25178) for the traces, and *surface form* for the surface: methods for the study are scale-invariant. Nowadays, a 3D survey at each one of these scale is not the main challenging part, but the 3D integration of these surveys, with the precise location of traces on surfaces, is the key.
+Each of these scales has specific acquisition technology: ConFocal microscopy, close-range or aerial photogrammetry, LiDAR (to name but a few). But all of these methods are based on *surface texture* (ISO 25178) for the traces, and *surface form* for the surface: the surface analysis scale-invariant. Nowadays, a 3D survey at each one of these scale is not the main challenging part, but the 3D integration of these surveys, with the precise location of traces on surfaces, is the key.
 
 On each 3D acquisition, the drawing of an region of interest makes it possible to locate the traces on the surface and to link 3D model of the surface (larger scale) with the 3D model of the traces (smaller scale). 
 
