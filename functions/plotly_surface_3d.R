@@ -1,6 +1,5 @@
 library(plotly)
 library(dplyr)
-library(htmlwidgets)
 
 url.www <- "https://raw.githubusercontent.com/zoometh/rockart/main/www/"
 xyz <- read.csv(paste0(url.www, "/confoc_3d.xyz"), sep = " ", header = F)
@@ -17,8 +16,8 @@ axz <- list(
 
 ## surface
 surf3d <- plot_ly(x = xyz$V1, y = xyz$V2, z = xyz$V3,
-        intensity = xyz$V3, type = 'mesh3d',
-        colorbar = list(title = "Z \u03BCm"))  %>%
+                  intensity = xyz$V3, type = 'mesh3d',
+                  colorbar = list(title = "Z \u03BCm"))  %>%
   layout(title = "ConFocal surface",
          scene = list(xaxis = axx, yaxis = axy, zaxis = axz,
                       aspectmode = 'data'))
@@ -31,7 +30,7 @@ surf3d_mark <- plot_ly()%>%
             marker = list(size = 10,
                           color = '#FF0000',
                           opacity = .3)
-            ) %>%
+  ) %>%
   add_trace(x = xyz$V1, y = xyz$V2, z = xyz$V3,
             intensity = xyz$V3, type = 'mesh3d',
             colorbar = list(title = "Z \u03BCm")) %>%
@@ -58,15 +57,12 @@ surf3d_marks <- plot_ly()%>%
                       aspectmode = 'data'))
 surf3d_marks
 
-
 ## export in HTML
 library(htmlwidgets)
 
 saveWidget(as_widget(surf3d), "surf3d.html")
 # creates https://zoometh.github.io/rockart/surf3d
-
 saveWidget(as_widget(surf3d_mark), "surf3d_mark.html")
 # creates https://zoometh.github.io/rockart/surf3d_mark
-
 saveWidget(as_widget(surf3d_marks), "surf3d_marks.html")
 # creates https://zoometh.github.io/rockart/surf3d_marks
