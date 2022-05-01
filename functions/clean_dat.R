@@ -2,8 +2,10 @@
 # and export it to .xyz
 
 file.name <- "confoc_3d.dat"
-file.path <- "c:/Rprojects/rockart/www/"
+file.path <- "https://raw.githubusercontent.com/zoometh/rockart/main/www/"
 file.data <- read.table(paste0(file.path, file.name), header = FALSE, sep = "")
-file.data <- file.data[, c(1, 2, 3)]
-write.table(file.data, paste0(file.path, "confoc_3d.xyz"),
-            sep = " ", row.names = FALSE, col.names = FALSE)
+xyz <- file.data[, c(1, 2, 3)]
+colnames(xyz) <- c("X", "Y", "Z")
+
+# write.table(file.data, paste0(my.local.file.path, "confoc_3d.xyz"),
+#             sep = " ", row.names = FALSE, col.names = FALSE)
