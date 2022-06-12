@@ -1,12 +1,12 @@
-# **Rock art** Multi-paradigms and multi-scale developments for 3D studies<img src="www/prj_rockart.png" width='150px' align="right"/>
+# **Rock art** developments for 3D studies<img src="www/prj_rockart.png" width='150px' align="right"/>
 
-## WebGL
+Multi-scale and multi-paradigm approaches with open source softwares to manage 3D data:
 
-Currently, the WebGL library allows to render directly `.stl` files, like here: [www/confoc_3d.stl](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl)
-
-## 3DHOP
-
-Integration of the 3DHOP framework from an Rmardown page with the Leaflet webmapping library for the Mont Bego archaeological site ([here](https://zoometh.github.io/rockart/)) : 
+* **WebGL** library allows to render directly `.stl` files (ex: [www/confoc_3d.stl](https://github.com/zoometh/rockart/blob/main/www/confoc_3d.stl));
+* **GitHub** offers a simple platform to host 3D objects and 3D viewers;
+* **Meshroom** is an open source pipeline for 3D photogrammetry. It can be run from a Python script;
+* **3DHOP** framework offers a showcase that can be integrated into Rmardown document with the Leaflet webmapping library for the (ex: [Mont Bego rock-art site](https://zoometh.github.io/rockart/));
+* **Blender** allows to create new 3D features like 3D shapes to locate annotations;
+* **reveal.js** is a HTML framework for Powerpoint-like presentations. It allows to add <iframes>, like 3DHOP windows, and set them interactive;
   
   
-![Tuto](https://zoometh.github.io/rockart/www/tuto.gif)
