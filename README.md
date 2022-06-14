@@ -1,4 +1,4 @@
-# **Rock art** developments for 3D studies<img src="www/prj_rockart.png" width='150px' align="right"/>
+# Developments for 3D studies<img src="www/prj_rockart.png" width='150px' align="right"/>
 
 Multi-scale and multi-paradigm approaches with open source softwares to manage 3D data:
 
